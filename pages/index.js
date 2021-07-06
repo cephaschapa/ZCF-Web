@@ -50,7 +50,7 @@ export default function Home() {
                   
                 </form>
                 <div className="mt-4 mx-auto center">
-                     <span className="mt-4 text-gray-500">Don'\t have an account? </span><Link href="/register"><span className="text-[#198A00] font-bold cursor-pointer">Sign up here</span></Link>
+                     <span className="mt-4 text-gray-500">You do not have an account? </span><Link href="/register"><span className="text-[#198A00] font-bold cursor-pointer">Sign up here</span></Link>
                 </div>
               </div>
             </div>
