@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import {MenuIcon, ChevronDownIcon, CogIcon, BellIcon, InformationCircleIcon, LogoutIcon, UserIcon, SupportIcon, CubeTransparentIcon, ShieldCheckIcon} from '@heroicons/react/solid'
-import {ChatAltIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon} from '@heroicons/react/outline'
+import {ChatAltIcon,UserAddIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon} from '@heroicons/react/outline'
 import {createPopper} from '@popperjs/core'
 import {useState, createRef} from 'react'
 import Navitems from './Navitems';
@@ -48,7 +48,7 @@ function Navbar({active}) {
 
     return (
         <div>
-            <div className=" w-80 rounded-r-2xl bg-[#198A00] h-screen p-5 text-white mr-1">
+            <div className=" w-80 rounded-r-2xl bg-[#198A00] h-screen p-5 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {/* Header */}
                     <div className="flex border-b border-[#48ac32] pb-5">
                         {/* User Profile */}
@@ -93,6 +93,9 @@ function Navbar({active}) {
                             <li onClick={() => {
                                 router.push('/chat')
                             }}><Navitems  name="Chat" counter="6" icon={<ChatAltIcon className="h-6"/>}/></li>
+                            <li onClick={()=>{
+                                router.push('/chat/find')
+                            }}><Navitems name="Invites" counter="4" icon={<UserAddIcon className="h-6"/>}/></li>
                             <li onClick={()=> {
                                 router.push('/chat/contacts')
                             }}><Navitems  name="Contacts" icon={<UserGroupIcon className="h-6"/>}/></li>
@@ -111,10 +114,13 @@ function Navbar({active}) {
                             }}><Navitems  name="Favorite Posts" icon={<HeartIcon className="h-6"/>}/></li>
                             <li onClick={()=>{
                                 router.push('/chat/find')
-                            }}><Navitems name="Status" counter="100" icon={<CubeTransparentIcon className="h-6"/>}/></li>
+                            }}><Navitems name="Stories" counter="100" icon={<CubeTransparentIcon className="h-6"/>}/></li>
                         </ul>
+                    
+                    <NavHeadings heading="Booking & Ticketing"/>
+                    {/* Nav Footer Quick Access Icons */}
                     {/* Marketplace*/}
-                    <NavHeadings heading="Marketplace"/>
+                    <NavHeadings heading="Utility & Bill Payments"/>
                         <div className="grid grid-flow-col grid-cols-2 grid-rows-2 p-2 mt-4 items-center gap-4">
                             <MarketPlaceItems icon={<CollectionIcon className="h-7"/>} title="Airtime"/>
                             <MarketPlaceItems icon={<LightningBoltIcon className="h-7"/>} title="Electricity"/>
@@ -123,8 +129,7 @@ function Navbar({active}) {
                             <MarketPlaceItems icon={<WifiIcon className="h-7"/>} title="Internet"/>
                             <MarketPlaceItems icon={<ShieldCheckIcon className="h-7"/>} title="Insurance"/>
                         </div>
-                    {/* Nav Footer Quick Access Icons */}
-                    <NavFooter  className="mt-4"/>
+                    <NavFooter  className="mt-2"/>
                 </div>
             </div>
         </div>
