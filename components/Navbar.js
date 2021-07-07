@@ -3,7 +3,7 @@ import {MenuIcon, ChevronDownIcon, CogIcon, BellIcon, InformationCircleIcon, Log
 import {ChatAltIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon} from '@heroicons/react/outline'
 import {createPopper} from '@popperjs/core'
 import {useState, createRef} from 'react'
-import Navitems from './NavItems';
+import Navitems from './Navitems';
 import NavHeadings from './NavHeadings';
 import Link from 'next/link'
 import {useRouter} from 'next/router'
