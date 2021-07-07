@@ -88,7 +88,7 @@ function Navbar({active}) {
                 {/* navigation */}
                 <div className="pt-4">
                     {/* Messenger Items */}
-                    <NavHeadings heading="Messenger"/>
+                    <NavHeadings heading="Messenger "/>
                         <ul className="">
                             <li onClick={() => {
                                 router.push('/chat')
