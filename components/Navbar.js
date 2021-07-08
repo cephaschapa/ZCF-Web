@@ -48,7 +48,7 @@ function Navbar({active}) {
 
     return (
         <div>
-            <div className=" w-80 rounded-r-2xl bg-[#198A00] h-screen p-5 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            <div className=" w-80 bg-[#198A00] h-screen p-5 text-white mr-1 overflow-auto scrollbar-thin scr scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {/* Header */}
                     <div className="flex border-b border-[#48ac32] pb-5">
                         {/* User Profile */}
