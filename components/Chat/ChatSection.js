@@ -39,7 +39,7 @@ function ChatSection() {
                     <div className="flex bg-white rounded-2xl mt-1 h-full w-full space-x-4 items-center p-3">
                         <PaperClipIcon className="h-8 text-[#198A00] cursor-pointer"/>
                         <EmojiHappyIcon className="h-8 text-[#198A00] cursor-pointer"/>
-                        <Picker onEmojiClick={onEmojiClick}/>
+                        
                         <div className="flex w-full space-x-2">
                             <input className="bg-white p-3 w-full h-12 rounded-3xl items-center border-2 active:outline-none focus:outline-none border-2 focus:border-[#198A00] text-gray-600" type="text" placeholder="Aa"/>
                             <MicrophoneIcon className="h-8 text-[#198A00] m-2 cursor-pointer"/>
