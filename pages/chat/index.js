@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
+import ChatSection from '../../components/Chat/ChatSection';
 import Midpanel from '../../components/Midpanel/Midpanel';
 import Navbar from '../../components/Navbar';
 function ChatHome() {
@@ -19,7 +20,8 @@ function ChatHome() {
                     {/* Mid items panel */}
                         <Midpanel />
                     {/* Chat section */}
-                    <div className="flex-grow w-1/2  bg-gray-50 h-screen p-5 text-white bg-gray-100 rounded-2xl"></div>
+                        <ChatSection />
+
                 </div>
             </main>
         </div>

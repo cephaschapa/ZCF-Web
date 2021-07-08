@@ -48,9 +48,9 @@ function Navbar({active}) {
 
     return (
         <div>
-            <div className=" w-80 bg-[#198A00] h-screen p-5 text-white mr-1 overflow-auto scrollbar-thin scr scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            <div className=" w-80 bg-[#198A00] h-screen p-5 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {/* Header */}
-                    <div className="flex border-b border-[#48ac32] pb-5">
+                    <div className="flex border-b border-[#48ac32] pb-5 sticky top-0 bg-[#198A00]">
                         {/* User Profile */}
                         <div className="flex space-x-4 items-center w-4/5">
                             <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52} 
@@ -92,16 +92,16 @@ function Navbar({active}) {
                         <ul className="">
                             <li onClick={() => {
                                 router.push('/chat')
-                            }}><Navitems  name="Chat" counter="6" icon={<ChatAltIcon className="h-6"/>}/></li>
+                            }}><Navitems  name="Chat" counter="13" icon={<ChatAltIcon className="h-6"/>}/></li>
                             <li onClick={()=>{
                                 router.push('/chat/find')
                             }}><Navitems name="Invites" counter="4" icon={<UserAddIcon className="h-6"/>}/></li>
                             <li onClick={()=> {
                                 router.push('/chat/contacts')
-                            }}><Navitems  name="Contacts" icon={<UserGroupIcon className="h-6"/>}/></li>
+                            }}><Navitems  name="Contacts" counter="29" icon={<UserGroupIcon className="h-6"/>}/></li>
                             <li onClick={()=>{
                                 router.push('/chat/find')
-                            }}><Navitems name="Find" counter="100" icon={<SearchIcon className="h-6"/>}/></li>
+                            }}><Navitems name="Find" icon={<SearchIcon className="h-6"/>}/></li>
                         </ul>
                     {/* Channel */}
                     <NavHeadings heading="Channel"/>

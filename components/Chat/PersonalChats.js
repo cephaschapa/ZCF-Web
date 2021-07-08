@@ -16,7 +16,7 @@ function PersonalChats({isActive}) {
             "dateRecieved": "09:30",
             "messageCount": 4,
             "hasRecieved": true,
-            "hasRead": true,
+            "hasRead": false,
         },
         {
             "id":2,
@@ -46,9 +46,9 @@ function PersonalChats({isActive}) {
         },
         {
             "id":4,
-            "username": "@brightney",
-            "email": "brightney@somemail.com",
-            "firstname":"Brightnney",
+            "username": "@joseph",
+            "email": "joseph@somemail.com",
+            "firstname":"Joseph",
             "lastname": "Jackson",
             "messageSnippet": "Call me now",
             "profileImage": '/assets/profilepic.png',
@@ -69,7 +69,7 @@ function PersonalChats({isActive}) {
             "dateRecieved": "09:30",
             "messageCount": 4,
             "hasRecieved": true,
-            "hasRead": true,
+            "hasRead": false,
         },
         {
             "id":6,
@@ -82,7 +82,7 @@ function PersonalChats({isActive}) {
             "dateRecieved": "09:30",
             "messageCount": 4,
             "hasRecieved": true,
-            "hasRead": true,
+            "hasRead": false,
         },
         {
             "id":7,
@@ -108,7 +108,7 @@ function PersonalChats({isActive}) {
             "dateRecieved": "Yesterday",
             "messageCount": 4,
             "hasRecieved": true,
-            "hasRead": true,
+            "hasRead": false,
         },
         {
             "id":9,
@@ -157,8 +157,9 @@ function PersonalChats({isActive}) {
                                     <p className="font-bold">{data.firstname}</p>
                                     <p className="text-xs">{data.dateRecieved}</p>
                                 </div>
-                                <div className="flex flex-row w-full">
+                                <div className="flex flex-row w-full justify-between">
                                     <p className="text-gray-400">{data.isTyping? 'Typing...' : data.messageSnippet}</p>
+                                    <p className={`${data.hasRead == false ? 'p-2 bg-[#198A00] rounded-full h-2 w-2': 'bg-none'}`}></p>
                                 </div>
                             </div>
                         </li>
