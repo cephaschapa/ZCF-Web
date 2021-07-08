@@ -64,7 +64,7 @@ function Navbar({active}) {
                                 </button>
                         </div>
                         {/* Dropdown Content */}
-                        <div className={`${dropdownPopoverShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"}  origin-top-left absolute left-0 mt-16 ml-5 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-gray-400 z-10`}>
+                        <div className={`${dropdownPopoverShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"}  origin-top-left absolute left-0 mt-16 ml-5 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-gray-400 z-50`}>
                             <div className="py-1" role="none">
                             {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
                             <a href="#" className="block px-4 py-2 text-sm text-[#198A00] font-bold" role="menuitem" tabIndex="-1" id="menu-item-0">Signed in as</a>
@@ -86,7 +86,7 @@ function Navbar({active}) {
                         </div>
                     </div>  
                 {/* navigation */}
-                <div className="pt-4">
+                <div className="pt-4 z-auto">
                     {/* Messenger Items */}
                     <NavHeadings heading="Messenger "/>
                         <ul className="">

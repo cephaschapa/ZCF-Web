@@ -13,19 +13,19 @@ function ChatSection() {
         <div className="flex w-full h-screen text-white bg-gray-100 rounded-2xl">
             <div className=" w-full">
                 {/* Chat Header */}
-                <div className="flex p-3 bg-[#198A00] h-24 rounded-br-2xl rounded-bl-2xl">
-                    <div className="pt-2">
-                        <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={70} width={70} />
-                        <div className="p-2 h-2 w-2 bg-[#44c526] float-right mt-10 -ml-16 bor rounded-full z-10 relative border-2 border-white"></div>
+                <div className="flex p-3 bg-[#198A00] h-20 rounded-br-2xl rounded-bl-2xl">
+                    <div className="p-1">
+                        <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52} />
+                        <div className="p-1 h-1 w-1 bg-[#44c526] float-right mt-8 -ml-16 bor rounded-full z-10 relative border-2 border-white"></div>
                     </div>
-                    <div className="flex flex-col ml-2 p-3 h-full">
+                    <div className="flex flex-col ml-2 p-2 h-full">
                         <p className="font-bold">Matt</p>
-                        <p>Online</p>
+                        <p className="text-sm text-gray-200">Online</p>
                     </div>
                     <div className="flex ml-2 p-3 h-full justify-end w-full space-x-8 items-center">
-                        <VideoCameraIcon className="h-8"/>
-                        <PhoneIcon className="h-8"/>
-                        <DotsVerticalIcon className="h-8"/>
+                        <VideoCameraIcon className="h-7"/>
+                        <PhoneIcon className="h-7"/>
+                        <DotsVerticalIcon className="h-7"/>
                     </div>
                     
                 </div>
@@ -35,7 +35,7 @@ function ChatSection() {
 
                     </div>
                 </div>
-                <div className="flex p-1 h-28 space-x-4 mt-4">
+                <div className="flex p-1 h-28 space-x-4 mt-8">
                     <div className="flex bg-white rounded-2xl mt-1 h-full w-full space-x-4 items-center p-3">
                         <PaperClipIcon className="h-8 text-[#198A00] cursor-pointer"/>
                         <EmojiHappyIcon className="h-8 text-[#198A00] cursor-pointer"/>
