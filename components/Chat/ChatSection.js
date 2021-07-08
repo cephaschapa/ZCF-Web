@@ -1,14 +1,14 @@
 import { EmojiHappyIcon, MicrophoneIcon, PaperAirplaneIcon, PaperClipIcon, VideoCameraIcon } from '@heroicons/react/outline'
 import { DotsVerticalIcon, PhoneIcon } from '@heroicons/react/solid'
 import Image from 'next/image';
-import Picker from 'emoji-picker-react';
+// import Picker from 'emoji-picker-react';
 import {useState} from 'react'
 
 function ChatSection() {
-    const [chosenEmoji, setChosenEmoji] = useState(null)
-    const onEmojiClick = (e, emojiObject) => {
-        setChosenEmoji(emojiObject);
-    }
+    // const [chosenEmoji, setChosenEmoji] = useState(null)
+    // const onEmojiClick = (e, emojiObject) => {
+    //     setChosenEmoji(emojiObject);
+    // }
     return (
         <div className="flex w-full h-screen text-white bg-gray-100 rounded-2xl">
             <div className=" w-full">
