@@ -14,7 +14,7 @@ function Midpanel() {
             <div className="bg-[#198A00] p-4 h-20 rounded-br-2xl rounded-bl-2xl top-0 sticky shadow-lg z-10">
                 <div className="bg-white p-3 px-6 rounded-full">
                     <form className="flex items-center">
-                        <input className="flex-grow focus:outline-none text-gray-700 bg-transparent" type="search" placeholder="Search Chat"/>
+                        <input className="flex-grow focus:outline-none text-gray-700 bg-transparent text-sm" type="search" placeholder="Search Chat"/>
                         <SearchIcon className="text-gray-400 h-6"/>
                     </form>
                 </div>
@@ -26,12 +26,12 @@ function Midpanel() {
                         e.preventDefault();
                         setOpenTab(1)
                     }
-                } title="Personal (10)" icon={<ChatAltIcon className="h-6 mr-1"/>} type="primary"/>
+                } title="Personal" icon={<ChatAltIcon className="h-6 mr-1"/>} type="primary"/>
                 <Buttons onClick={
                     (e)=>{
                         e.preventDefault();
                         setOpenTab(2)
-                    }} title="Groups (3)" icon={<ChatAlt2Icon className="h-6 mr-1" />} type="secondary"/>
+                    }} title="Groups" icon={<ChatAlt2Icon className="h-6 mr-1" />} type="secondary"/>
             </div>
             {/* Chat items */}
             <div className="mt-4 p-1">

@@ -48,7 +48,7 @@ function Navbar({active}) {
 
     return (
         <div>
-            <div className=" w-80 bg-[#198A00] h-screen p-5 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            <div className=" w-64 bg-[#198A00] h-screen p-2 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {/* Header */}
                     <div className="flex border-b border-[#48ac32] pb-5 sticky top-0 bg-[#198A00] z-10">
                         {/* User Profile */}
@@ -60,11 +60,11 @@ function Navbar({active}) {
                                 ref={btnDropdownRef}
                                 onClick={() => {
                                     dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover()
-                                }}  className="flex font-bold"  >John Smith <span><ChevronDownIcon className="h-6"/></span>
+                                }}  className="flex font-bold"  >John<span><ChevronDownIcon className="h-6"/></span>
                                 </button>
                         </div>
                         {/* Dropdown Content */}
-                        <div className={`${dropdownPopoverShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"}  origin-top-left absolute left-0 mt-16 ml-5 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-gray-400 z-50`}>
+                        <div className={`${dropdownPopoverShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"}  origin-top-left absolute left-0 mt-16 ml-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-gray-400 z-50`}>
                             <div className="py-1" role="none">
                             {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
                             <a href="#" className="block px-4 py-2 text-sm text-[#198A00] font-bold" role="menuitem" tabIndex="-1" id="menu-item-0">Signed in as</a>
@@ -81,8 +81,8 @@ function Navbar({active}) {
                         </div>
                         {/* Toggle Menu */}
                         <div className="flex w-1/3 justify-end space-x-3 items-center">
-                            <BellIcon className="h-7 cursor-pointer"/>
-                            <TranslateIcon className={`${drawerMenuShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"} h-7 cursor-pointer`} onClick={drawerMenuShow ? expandDrawerMenu(): minimizeMenu()}/>
+                            <BellIcon className="h-5 cursor-pointer"/>
+                            <TranslateIcon className={`${drawerMenuShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"} h-5 cursor-pointer`} onClick={drawerMenuShow ? expandDrawerMenu(): minimizeMenu()}/>
                         </div>
                     </div>  
                 {/* navigation */}
@@ -121,13 +121,13 @@ function Navbar({active}) {
                     {/* Nav Footer Quick Access Icons */}
                     {/* Marketplace*/}
                     <NavHeadings heading="Utility & Bill Payments"/>
-                        <div className="grid grid-flow-col grid-cols-2 grid-rows-2 p-2 mt-4 items-center gap-4">
-                            <MarketPlaceItems icon={<CollectionIcon className="h-7"/>} title="Airtime"/>
-                            <MarketPlaceItems icon={<LightningBoltIcon className="h-7"/>} title="Electricity"/>
-                            <MarketPlaceItems icon={<ChipIcon className="h-7"/>} title="Water"/>
-                            <MarketPlaceItems icon={<FilmIcon className="h-7"/>} title="Television"/>
-                            <MarketPlaceItems icon={<WifiIcon className="h-7"/>} title="Internet"/>
-                            <MarketPlaceItems icon={<ShieldCheckIcon className="h-7"/>} title="Insurance"/>
+                        <div className="grid grid-flow-col grid-cols-2 justify-evenly grid-rows-2 p-0 mt-4 items-center gap-2">
+                            <MarketPlaceItems icon={<CollectionIcon className="h-5"/>} title="Airtime"/>
+                            <MarketPlaceItems icon={<LightningBoltIcon className="h-5"/>} title="ZESCO"/>
+                            <MarketPlaceItems icon={<ChipIcon className="h-5"/>} title="Water"/>
+                            <MarketPlaceItems icon={<FilmIcon className="h-5"/>} title="TV"/>
+                            <MarketPlaceItems icon={<WifiIcon className="h-5"/>} title="Internet"/>
+                            <MarketPlaceItems icon={<ShieldCheckIcon className="h-5"/>} title="Insurance"/>
                         </div>
                     <NavFooter  className="mt-2"/>
                 </div>

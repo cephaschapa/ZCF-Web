@@ -154,11 +154,11 @@ function PersonalChats({isActive}) {
                             </div>
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-row justify-between">
-                                    <p className="font-bold">{data.firstname}</p>
+                                    <p className="font-bold text-sm">{data.firstname}</p>
                                     <p className="text-xs">{data.dateRecieved}</p>
                                 </div>
                                 <div className="flex flex-row w-full justify-between">
-                                    <p className="text-gray-400">{data.isTyping? 'Typing...' : data.messageSnippet}</p>
+                                    <p className="text-gray-400 text-sm">{data.isTyping? 'Typing...' : data.messageSnippet}</p>
                                     <p className={`${data.hasRead == false ? 'p-2 bg-[#198A00] rounded-full h-2 w-2': 'bg-none'}`}></p>
                                 </div>
                             </div>
