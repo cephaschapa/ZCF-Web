@@ -11,7 +11,7 @@ function Midpanel() {
     return (
         <div className="w-1/3 bg-gray-100 h-screen pr-2 pt-0 p-0 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100">
             {/* Header */}
-            <div className="bg-[#198A00] p-4 h-20 rounded-br-2xl rounded-bl-2xl top-0 sticky shadow-lg">
+            <div className="bg-[#198A00] p-4 h-20 rounded-br-2xl rounded-bl-2xl top-0 sticky shadow-lg z-10">
                 <div className="bg-white p-3 px-6 rounded-full">
                     <form className="flex items-center">
                         <input className="flex-grow focus:outline-none text-gray-700 bg-transparent" type="search" placeholder="Search Chat"/>
@@ -20,7 +20,7 @@ function Midpanel() {
                 </div>
                 
             </div>
-            <div className="flex justify-between mt-4 w-full sticky top-20 bg-gray-100 p-1">
+            <div className="flex justify-between mt-4 w-full sticky top-20 bg-gray-100 p-1 z-10">
                 <Buttons onClick={
                     (e)=>{
                         e.preventDefault();

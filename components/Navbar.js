@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import {MenuIcon, ChevronDownIcon, CogIcon, BellIcon, InformationCircleIcon, LogoutIcon, UserIcon, SupportIcon, CubeTransparentIcon, ShieldCheckIcon} from '@heroicons/react/solid'
-import {ChatAltIcon,UserAddIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon} from '@heroicons/react/outline'
+import {ChatAltIcon,UserAddIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon, TranslateIcon} from '@heroicons/react/outline'
 import {createPopper} from '@popperjs/core'
 import {useState, createRef} from 'react'
 import Navitems from './Navitems';
@@ -82,7 +82,7 @@ function Navbar({active}) {
                         {/* Toggle Menu */}
                         <div className="flex w-1/3 justify-end space-x-3 items-center">
                             <BellIcon className="h-7 cursor-pointer"/>
-                            <MenuIcon className={`${drawerMenuShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"} h-7 cursor-pointer`} onClick={drawerMenuShow ? expandDrawerMenu(): minimizeMenu()}/>
+                            <TranslateIcon className={`${drawerMenuShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"} h-7 cursor-pointer`} onClick={drawerMenuShow ? expandDrawerMenu(): minimizeMenu()}/>
                         </div>
                     </div>  
                 {/* navigation */}
