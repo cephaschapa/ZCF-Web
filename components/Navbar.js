@@ -50,7 +50,7 @@ function Navbar({active}) {
         <div>
             <div className=" w-80 bg-[#198A00] h-screen p-5 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {/* Header */}
-                    <div className="flex border-b border-[#48ac32] pb-5 sticky top-0 bg-[#198A00]">
+                    <div className="flex border-b border-[#48ac32] pb-5 sticky top-0 bg-[#198A00] z-10">
                         {/* User Profile */}
                         <div className="flex space-x-4 items-center w-4/5">
                             <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52} 
