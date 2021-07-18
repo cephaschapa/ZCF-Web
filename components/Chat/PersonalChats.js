@@ -146,8 +146,8 @@ function PersonalChats({isActive}) {
             {
                 ChatData.map((data) => {
                     return (
-                        <Link href={`/chat/${data.id}`} className="focus:bg-gray-400">
-                            <li key={data.id} id="link1">
+                        <Link  key={data.id} href={`/chat/${data.id}`} className="focus:bg-gray-400">
+                            <li  id="link1">
                                 <div className={`${active == true ? 'bg-white' : 'border-b border-[#ffffff]'} text-gray-500 mb-2 bg-white rounded-2xl flex items-center p-2 transition duration-200 transform hover:shadow-md cursor-pointer z-0 focus:bg-[#9fd493]`}>
                                     <div className="flex flex-col w-24 h-full">
                                         {/* <Image src={data.profileImage} alt="userpicture" height="60" width="60"/> */}

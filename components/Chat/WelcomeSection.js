@@ -230,7 +230,7 @@ function WelcomeSection() {
                                             document.getElementById('opt-val').innerHTML = "Yes"
                                           }
                                         }
-                                      } type="checkbox" class="form-checkbox h-6 w-6 checked:bg-[#198A00] border-2 border-[#198A00] checked:border-[#198A00]"/>
+                                      } type="checkbox" className="form-checkbox h-6 w-6 checked:bg-[#198A00] border-2 border-[#198A00] checked:border-[#198A00]"/>
                                       
                                       </div>
                                     </div>
@@ -242,14 +242,14 @@ function WelcomeSection() {
                                     </div>
                                     
                                     <div className="flex flex-col w-1/4 items-end mt-2 ">
-                                      <input type="checkbox" class="form-checkbox h-6 w-6 checked:bg-[#198A00] border-2 border-[#198A00] checked:border-[#198A00]"/>
+                                      <input type="checkbox" className="form-checkbox h-6 w-6 checked:bg-[#198A00] border-2 border-[#198A00] checked:border-[#198A00]"/>
                                     </div>
 
                                   </div>
                                   <div className= {`${isPrivate == true ? "block": "hidden"} flex mt-4`}>
                                     <div className="flex flex-col w-3/4">
                                       <p className="font-bold text-[#198A00]">Enter room address.</p>
-                                      <input type="text" class="flex flex-grow bg-gray-100 p-3 mr-2 rounded-2xl focus:outline-none text-sm" placeholder="the-group"/>
+                                      <input type="text" className="flex flex-grow bg-gray-100 p-3 mr-2 rounded-2xl focus:outline-none text-sm" placeholder="the-group"/>
                                     </div>
                               
                                   </div>
