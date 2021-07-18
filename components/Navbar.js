@@ -60,11 +60,11 @@ function Navbar({active}) {
                                 ref={btnDropdownRef}
                                 onClick={() => {
                                     dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover()
-                                }}  className="flex font-bold"  >John<span><ChevronDownIcon className="h-6"/></span>
+                                }}  className="flex font-bold p-2 rounded-2xl transition duration-150 transform focus:bg-white focus:text-[#198A00]"  >John<span><ChevronDownIcon className="h-6"/></span>
                                 </button>
                         </div>
                         {/* Dropdown Content */}
-                        <div className={`${dropdownPopoverShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"}  origin-top-left absolute left-0 mt-16 ml-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-gray-400 z-50`}>
+                        <div className={`${dropdownPopoverShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"}  origin-top-left absolute left-0 mt-16 ml-0 w-56 rounded-2xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-gray-400 z-50`}>
                             <div className="py-1" role="none">
                             {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
                             <a href="#" className="block px-4 py-2 text-sm text-[#198A00] font-bold" role="menuitem" tabIndex="-1" id="menu-item-0">Signed in as</a>
@@ -80,7 +80,7 @@ function Navbar({active}) {
                             </div>
                         </div>
                         {/* Toggle Menu */}
-                        <div className="flex w-1/3 justify-end space-x-3 items-center">
+                        <div className="flex w-1/3 pr-2 justify-end space-x-3 items-center">
                             <BellIcon className="h-5 cursor-pointer"/>
                             <TranslateIcon className={`${drawerMenuShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"} h-5 cursor-pointer`} onClick={drawerMenuShow ? expandDrawerMenu(): minimizeMenu()}/>
                         </div>

@@ -10,9 +10,14 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+      borderRadius: ['checked']
+    },
   },
   plugins: [
-    require('tailwind-scrollbar')
+    require('tailwind-scrollbar'),
+    require('@tailwindcss/custom-forms')
   ],
 }

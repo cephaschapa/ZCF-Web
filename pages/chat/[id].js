@@ -1,11 +1,9 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import React from 'react'
-import ChatSection from '../../components/Chat/ChatSection';
-import WelcomeSection from '../../components/Chat/WelcomeSection'
-import Midpanel from '../../components/Midpanel/Midpanel';
-import Navbar from '../../components/Navbar';
-function ChatHome() {
+import Navbar from '../../components/Navbar'
+import Midpanel from '../../components/Midpanel/Midpanel'
+import ChatSection from '../../components/Chat/ChatSection'
+
+function Chat() {
     return (
         <div className="h-screen">
             <Head>
@@ -23,11 +21,11 @@ function ChatHome() {
                     {/* Chat section */}
                     {/* <ChatSection /> */}
                     {/* Chat first use and no active chat section */}
-                        <WelcomeSection />
+                        <ChatSection />
                 </div>
             </main>
         </div>
     )
 }
 
-export default ChatHome
+export default Chat

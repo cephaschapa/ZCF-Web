@@ -1,5 +1,6 @@
 import {useState} from "react"
 import Image from 'next/image'
+import Link from 'next/link'
 function PersonalChats({isActive}) {
     const [active, setActive] = useState(false)
 
@@ -140,33 +141,38 @@ function PersonalChats({isActive}) {
     const Controller = e=>{setActive(true)}
     
     return (
-        <div>
+        <div> { ChatData.length < 1 ? <p className="text-gray-400 bg-white p-2 h-28 rounded-2xl">You currently have no chats. Begin a new one by clicking the plus button.</p> :
             <ul>
             {
                 ChatData.map((data) => {
                     return (
-                        <li onClick={Controller} key={data.id} className={`${active == true ? 'bg-white' : 'border-b border-[#ffffff]'} text-gray-500 mb-2 bg-white rounded-2xl flex items-center p-2 transition duration-200 transform hover:shadow-md cursor-pointer z-0`}>
-                            <div className="flex flex-col w-24 h-full">
-                                {/* <Image src={data.profileImage} alt="userpicture" height="60" width="60"/> */}
-                                <div className="h-16 w-16 bg-gray-100 rounded-full">
+                        <Link href={`/chat/${data.id}`} className="focus:bg-gray-400">
+                            <li key={data.id} id="link1">
+                                <div className={`${active == true ? 'bg-white' : 'border-b border-[#ffffff]'} text-gray-500 mb-2 bg-white rounded-2xl flex items-center p-2 transition duration-200 transform hover:shadow-md cursor-pointer z-0 focus:bg-[#9fd493]`}>
+                                    <div className="flex flex-col w-24 h-full">
+                                        {/* <Image src={data.profileImage} alt="userpicture" height="60" width="60"/> */}
+                                        <div className="h-16 w-16 bg-gray-100 rounded-full">
 
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col w-full">
+                                        <div className="flex flex-row justify-between">
+                                            <p className="font-bold text-sm">{data.firstname}</p>
+                                            <p className="text-xs">{data.dateRecieved}</p>
+                                        </div>
+                                        <div className="flex flex-row w-full justify-between">
+                                            <p className="text-gray-400 text-sm">{data.isTyping? 'Typing...' : data.messageSnippet}</p>
+                                            <p className={`${data.hasRead == false ? 'p-2 bg-[#198A00] rounded-full h-2 w-2': 'bg-none'}`}></p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col w-full">
-                                <div className="flex flex-row justify-between">
-                                    <p className="font-bold text-sm">{data.firstname}</p>
-                                    <p className="text-xs">{data.dateRecieved}</p>
-                                </div>
-                                <div className="flex flex-row w-full justify-between">
-                                    <p className="text-gray-400 text-sm">{data.isTyping? 'Typing...' : data.messageSnippet}</p>
-                                    <p className={`${data.hasRead == false ? 'p-2 bg-[#198A00] rounded-full h-2 w-2': 'bg-none'}`}></p>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        </Link>
+                        
                     )
                 })
             }
-            </ul>
+            </ul>}
         </div>
     )
 }
