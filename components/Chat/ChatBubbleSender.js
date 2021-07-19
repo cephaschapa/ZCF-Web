@@ -10,7 +10,7 @@ function ChatBubbleSender({message, time, read}) {
             <div className="flex flex-row space-x-3 items-center justify-end">
                 <p className="text-xs">{time}</p>
                 {
-                    read ? <CheckCircleIcon className="h-4 w-4 text-[#198A00]"/> : <CheckIcon />
+                    read ? <CheckCircleIcon className="h-4 w-4 text-[#198A00]"/> : <CheckIcon className="h-4 w-4"/>
                 }
             </div>
         </div>
