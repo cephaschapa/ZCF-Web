@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import {MenuIcon, ChevronDownIcon, CogIcon, BellIcon, InformationCircleIcon, LogoutIcon, UserIcon, SupportIcon, CubeTransparentIcon, ShieldCheckIcon} from '@heroicons/react/solid'
-import {ChatAltIcon,UserAddIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon, TranslateIcon} from '@heroicons/react/outline'
+import {MenuIcon, ChevronDownIcon, CogIcon, BellIcon, InformationCircleIcon, LogoutIcon, UserIcon, SupportIcon, CubeTransparentIcon, ShieldCheckIcon, ChevronRightIcon} from '@heroicons/react/solid'
+import {ChatAltIcon,UserAddIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon, TranslateIcon, TicketIcon, OfficeBuildingIcon} from '@heroicons/react/outline'
 import {createPopper} from '@popperjs/core'
 import {useState, createRef} from 'react'
 import Navitems from './Navitems';
-import NavHeadings from './NavHeadings';
+import NavSections from './NavSections';
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import MarketPlaceItems from './MarketPlaceItems'
@@ -14,6 +14,12 @@ function Navbar({active}) {
     // Popup profile menu
     const router = useRouter()
     const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
+
+    const [dropDown0, setDropDown0] = useState(0)
+    const [dropDown1, setDropDown1] = useState(0)
+    const [dropDown2, setDropDown2] = useState(0)
+    const [dropDown3, setDropDown3] = useState(0)
+    const [dropDown4, setDropDown4] = useState(0)
 
     // Drawer navigation menu slider
     const [drawerMenuShow, setDrawerMenu] = useState(false);
@@ -88,25 +94,45 @@ function Navbar({active}) {
                 {/* navigation */}
                 <div className="pt-4 z-auto">
                     {/* Messenger Items */}
-                    <NavHeadings heading="Messenger "/>
-                        <ul className="">
-                            <li onClick={() => {
-                                router.push('/chat')
-                            }}><Navitems  name="Chat" counter="13" icon={<ChatAltIcon className="h-6"/>}/></li>
-                            <li onClick={()=>{
-                                router.push('/chat/find')
-                            }}><Navitems name="Invites" counter="4" icon={<UserAddIcon className="h-6"/>}/></li>
-                            <li onClick={()=> {
-                                router.push('/chat/contacts')
-                            }}><Navitems  name="Contacts" counter="29" icon={<UserGroupIcon className="h-6"/>}/></li>
-                            <li onClick={()=>{
-                                router.push('/chat/find')
-                            }}><Navitems name="Find" icon={<SearchIcon className="h-6"/>}/></li>
-                        </ul>
-                    {/* Channel */}
-                    <NavHeadings heading="Channel"/>
-                        <ul className="">
+                    <div onClick={()=> {
+                        if(dropDown0 == 0){
+                            setDropDown0(1)
+                        }
+                        else {
+                            setDropDown0(0)
+                        }
+                    } } className="flex p-4 font-bold text-sm cursor-pointer bg-[#3c9727] mb-1 mt-1 rounded-xl justify-between">
+                        <h1 className="">Messenger</h1>
+                        <ChevronRightIcon className={`${dropDown0 == 1? "rotate-90":"rotate-0"} h-6 w-6 transition duration-150 transform ease-in-out`}/>
+                    </div>
+                    <ul className={`${dropDown0 == 1? "h-52 transition duration-100 ease-in-out" : "hidden"}`}>
                         <li onClick={() => {
+                            router.push('/chat')
+                        }}><Navitems  name="Chat" counter="13" icon={<ChatAltIcon className="h-6"/>}/></li>
+                        <li onClick={()=>{
+                            router.push('/chat/find')
+                        }}><Navitems name="Invites" counter="4" icon={<UserAddIcon className="h-6"/>}/></li>
+                        <li onClick={()=> {
+                            router.push('/chat/contacts')
+                        }}><Navitems  name="Contacts" counter="29" icon={<UserGroupIcon className="h-6"/>}/></li>
+                        <li onClick={()=>{
+                            router.push('/chat/find')
+                        }}><Navitems name="Find" icon={<SearchIcon className="h-6"/>}/></li>
+                    </ul>
+                    {/* Channel */}
+                    <div onClick={()=> {
+                        if(dropDown1 == 0){
+                            setDropDown1(2)
+                        }
+                        else {
+                            setDropDown1(0)
+                        }
+                    } } className="flex p-4 font-bold text-sm cursor-pointer bg-[#3c9727] mb-1 mt-1 rounded-xl justify-between">
+                        <h1 className="">Channel</h1>
+                        <ChevronRightIcon className={`${dropDown1 == 2? "rotate-90":"rotate-0"} h-6 w-6 transition duration-150 transform ease-in-out`}/>
+                    </div>
+                        <ul className={`${dropDown1 == 2? "transition duration-100 ease-in-out" : "hidden"}`}>
+                            <li onClick={() => {
                                 router.push('/chat')
                             }}><Navitems  name="Posts" counter="6" icon={<ChatIcon className="h-6"/>}/></li>
                             <li onClick={()=> {
@@ -116,12 +142,39 @@ function Navbar({active}) {
                                 router.push('/chat/find')
                             }}><Navitems name="Stories" counter="100" icon={<CubeTransparentIcon className="h-6"/>}/></li>
                         </ul>
-                    
-                    <NavHeadings heading="Booking & Ticketing"/>
+                    <div onClick={()=> {
+                        if(dropDown2 == 0){
+                            setDropDown2(3)
+                        }
+                        else {
+                            setDropDown2(0)
+                        }
+                    } } className="flex p-4 font-bold text-sm cursor-pointer bg-[#3c9727] mb-1 mt-1 rounded-xl justify-between">
+                        <h1 className="">Ticketing and Booking</h1>
+                        <ChevronRightIcon className={`${dropDown2 == 3? "rotate-90":"rotate-0"} h-6 w-6 transition duration-150 transform ease-in-out`}/>
+                    </div>
+                    <ul className={`${dropDown2 == 3? "h-auto transition duration-100 ease-in-out" : "hidden"}`}>
+                        <li onClick={()=>{
+                                    router.push('/chat/find')
+                                }}><Navitems name="Bus Ticket" counter="" icon={<TicketIcon className="h-6"/>}/></li>
+                        <li onClick={()=>{
+                                    router.push('/chat/find')
+                                }}><Navitems name="Hotels and Booking" counter="" icon={<OfficeBuildingIcon className="h-6"/>}/></li>
+                    </ul>
                     {/* Nav Footer Quick Access Icons */}
                     {/* Marketplace*/}
-                    <NavHeadings heading="Utility & Bill Payments"/>
-                        <div className="grid grid-flow-col grid-cols-2 justify-evenly grid-rows-2 p-0 mt-4 items-center gap-2">
+                    <div onClick={()=> {
+                        if(dropDown4 == 0){
+                            setDropDown4(1)
+                        }
+                        else {
+                            setDropDown4(0)
+                        }
+                    } } className="flex p-4 font-bold text-sm cursor-pointer bg-[#3c9727] mb-1 mt-1 rounded-xl justify-between">
+                        <h1 className="">Marketplace</h1>
+                        <ChevronRightIcon className={`${dropDown4 == 1? "rotate-90":"rotate-0"} h-6 w-6 transition duration-150 transform ease-in-out`}/>
+                    </div>
+                        <div className={`${dropDown4 == 1? "block":"hidden"} grid grid-flow-col grid-cols-2 justify-evenly grid-rows-2 p-0 mt-4 items-center gap-2`}>
                             <MarketPlaceItems icon={<CollectionIcon className="h-5"/>} title="Airtime"/>
                             <MarketPlaceItems icon={<LightningBoltIcon className="h-5"/>} title="ZESCO"/>
                             <MarketPlaceItems icon={<ChipIcon className="h-5"/>} title="Water"/>

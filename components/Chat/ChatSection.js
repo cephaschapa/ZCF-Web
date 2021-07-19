@@ -12,7 +12,7 @@ function ChatSection() {
     // }
     return (
         <div className="flex w-full h-screen text-white bg-gray-100 rounded-2xl">
-            <div className=" w-full">
+            <div className="w-full">
                 {/* Chat Header */}
                 <div className="flex p-3 bg-[#198A00] h-20 rounded-br-2xl rounded-bl-2xl">
                     <div className="p-1">
@@ -32,17 +32,17 @@ function ChatSection() {
                 </div>
                 {/* Chat area */}
                 <div className="p-1 h-3/4">
-                    <div className=" rounded-2xl mt-1 h-full">
+                    <div className=" rounded-2xl h-full">
 
                     </div>
                 </div>
-                <div className="flex p-1 h-24 space-x-4 mt-8">
+                <div className="flex p-1 h-24 space-x-4">
                     <div className="flex bg-white rounded-2xl mt-1 h-full w-full space-x-4 items-center p-3">
                         <PaperClipIcon className="h-6 text-[#198A00] cursor-pointer"/>
                         <EmojiHappyIcon className="h-6 text-[#198A00] cursor-pointer"/>
                          
                         <div className="flex w-full space-x-2">
-                            <input className="bg-white p-3 w-full h-12 rounded-3xl items-center border-2 active:outline-none focus:outline-none border-2 focus:border-[#198A00] text-gray-600" type="text" placeholder="Aa"/>
+                            <input className="bg-white p-3 w-full h-12 rounded-3xl items-center active:outline-none focus:outline-none border-2 focus:border-[#198A00] text-gray-600" type="text" placeholder="Aa"/>
                             <MicrophoneIcon className="h-6 text-[#198A00] m-2 cursor-pointer"/>
                             <PaperAirplaneIcon className="h-6 text-[#198A00] rotate-90 m-2 cursor-pointer"/>
                         </div>
@@ -64,7 +64,7 @@ function ChatSection() {
                 <div className="flex flex-col items-center mt-10 border-b border-gray-300 pb-6">
                     <p className="text-gray-500 font-bold text-sm">Shared Attachments</p>
                     <div className="flex flex-row mt-5">
-                        <button className="flex text-sm flex-col items-center space-y-2 pt-5 text-[#198A00] bg-gray-100 m-2 p-2 rounded-3xl h-20 w-24"><DocumentTextIcon className="h-7"/> <span>Docs</span></button>
+                        <button className="flex text-sm flex-col items-center space-y-2 pt-5 text-[#198A00] bg-gray-100 m-2 p-2 rounded-3xl h-20 w-1/3"><DocumentTextIcon className="h-7"/> <span>Docs</span></button>
                         <button className="flex text-sm flex-col items-center space-y-2 pt-5 text-[#198A00] bg-gray-100 m-2 p-2 rounded-3xl h-20 w-24"><FilmIcon className="h-7"/><span>Videos</span></button>
                         <button className="flex text-sm flex-col items-center space-y-2 pt-5 text-[#198A00] bg-gray-100 m-2 p-2 rounded-3xl h-20 w-24"><MusicNoteIcon className="h-7"/><span>Audio</span></button>
                     </div>
