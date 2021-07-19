@@ -43,7 +43,7 @@ function ChatSection() {
                 {/* Chat area */}
                 <div className="p-1 h-full">
                     <div className=" rounded-2xl h-full  bg-white w-full p-2">
-                        <ChatBubbleSender message="hey hello world" time="09:30" read={true}/>
+                        <ChatBubbleSender message="Hey hello world, from blue origin." time="09:30" read={true}/>
                     </div>
                 </div>
                 <div className="flex sticky p-1 h-24 space-x-4 bottom-2">
