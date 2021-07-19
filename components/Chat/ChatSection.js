@@ -1,18 +1,20 @@
-import { EmojiHappyIcon, FilmIcon, MicrophoneIcon, PaperAirplaneIcon, PaperClipIcon, VideoCameraIcon } from '@heroicons/react/outline'
+import { EmojiHappyIcon, FilmIcon, InformationCircleIcon, MicrophoneIcon, PaperAirplaneIcon, PaperClipIcon, VideoCameraIcon, XIcon } from '@heroicons/react/outline'
 import { DocumentTextIcon, DotsVerticalIcon, MusicNoteIcon, PhoneIcon } from '@heroicons/react/solid'
 import Image from 'next/image';
 // import Picker from 'emoji-picker-react';
 import {useState} from 'react'
+import ChatBubbleSender from './ChatBubbleSender';
 import ChatGroups from './ChatGroups';
 
 function ChatSection() {
+    const [openPanel, setOpenPanel] = useState(false)
     // const [chosenEmoji, setChosenEmoji] = useState(null)
     // const onEmojiClick = (e, emojiObject) => {
     //     setChosenEmoji(emojiObject);
     // }
     return (
         <div className="flex w-full h-screen text-white bg-gray-100 rounded-2xl">
-            <div className="flex flex-col w-full justify-between">
+            <div className="flex flex-col w-full justify-between transition duration-150 ease-in-out">
                 {/* Chat Header */}
                 <div className="flex p-3 bg-[#198A00] h-20 rounded-br-2xl rounded-bl-2xl">
                     <div className="p-1">
@@ -27,13 +29,21 @@ function ChatSection() {
                         <VideoCameraIcon className="h-6"/>
                         <PhoneIcon className="h-6"/>
                         <DotsVerticalIcon className="h-6"/>
+                        <InformationCircleIcon className="h-6" title="" onClick={()=>{
+                            if(openPanel == false) {
+                                setOpenPanel(true);
+                            }
+                            else {
+                                setOpenPanel(false);
+                            }
+                        }}/>
                     </div>
                     
                 </div>
                 {/* Chat area */}
                 <div className="p-1 h-full">
-                    <div className=" rounded-2xl h-full  bg-white w-full">
-                        <p className="p-2 text-gray-600">Hello</p>
+                    <div className=" rounded-2xl h-full  bg-white w-full p-2">
+                        <ChatBubbleSender message="hey hello world" time="09:30" read={true}/>
                     </div>
                 </div>
                 <div className="flex sticky p-1 h-24 space-x-4 bottom-2">
@@ -49,7 +59,10 @@ function ChatSection() {
                     </div>
                 </div>
             </div>
-            <div className="flex-grow w-1/3 p-2 bg-white m-1 rounded-2xl">
+            <div className={`${openPanel ? "hidden":"block"} flex-grow w-1/3 p-2 bg-white m-1 rounded-2xl`}>
+                {/* <div className="flex flex-col items-start h-12 pt-3">
+                    <XIcon className="h-8 w-8 text-[#198A00] bg-gray-100 rounded-full p-2 cursor-pointer"/>
+                </div> */}
                 <div className="flex flex-col items-center h-24">
                     <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={80} width={80} />
                 </div>
