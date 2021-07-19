@@ -12,7 +12,7 @@ function ChatSection() {
     // }
     return (
         <div className="flex w-full h-screen text-white bg-gray-100 rounded-2xl">
-            <div className="w-full">
+            <div className="flex flex-col w-full justify-between">
                 {/* Chat Header */}
                 <div className="flex p-3 bg-[#198A00] h-20 rounded-br-2xl rounded-bl-2xl">
                     <div className="p-1">
@@ -31,12 +31,12 @@ function ChatSection() {
                     
                 </div>
                 {/* Chat area */}
-                <div className="p-1 h-3/4">
-                    <div className=" rounded-2xl h-full">
-
+                <div className="p-1 h-full">
+                    <div className=" rounded-2xl h-full  bg-white w-full">
+                        <p className="p-2 text-gray-600">Hello</p>
                     </div>
                 </div>
-                <div className="flex p-1 h-24 space-x-4">
+                <div className="flex sticky p-1 h-24 space-x-4 bottom-2">
                     <div className="flex bg-white rounded-2xl mt-1 h-full w-full space-x-4 items-center p-3">
                         <PaperClipIcon className="h-6 text-[#198A00] cursor-pointer"/>
                         <EmojiHappyIcon className="h-6 text-[#198A00] cursor-pointer"/>
