@@ -8,6 +8,7 @@ import ChatGroups from './ChatGroups';
 
 function ChatSection() {
     const [openPanel, setOpenPanel] = useState(false)
+    const [openMenu, setOpenMenu] = useState(false)
     // const [chosenEmoji, setChosenEmoji] = useState(null)
     // const onEmojiClick = (e, emojiObject) => {
     //     setChosenEmoji(emojiObject);
@@ -28,7 +29,13 @@ function ChatSection() {
                     <div className="flex ml-2 p-3 h-full justify-end w-full space-x-8 items-center">
                         <VideoCameraIcon className="h-6"/>
                         <PhoneIcon className="h-6"/>
-                        <DotsVerticalIcon className="h-6"/>
+                        <DotsVerticalIcon className="h-6 cursor-pointer" onClick={() => {
+                            if(openMenu == false){
+                                setOpenMenu(true);
+                            }else{
+                                setOpenMenu(false);
+                            }
+                        }}/>
                         <InformationCircleIcon className="h-6" title="" onClick={()=>{
                             if(openPanel == false) {
                                 setOpenPanel(true);
@@ -38,11 +45,19 @@ function ChatSection() {
                             }
                         }}/>
                     </div>
+                    {/* Chat options */}
+                    <div className={`${openMenu ? "transition duration-100 scale-100":"transition duration-100 scale-0"} flex flex-col shadow-lg text-gray-500 text-sm p-4 -ml-48 right-10 h-40 relative top-12 rounded-2xl w-60 bg-gray-100`}>
+                        <ul className="space-y-2">
+                            <li className="transition duration-150 transform hover:bg-gray-300 p-2 rounded-2xl cursor-pointer">Delete Conversation</li>
+                            <li className="transition duration-150 transform hover:bg-gray-300 p-2 rounded-2xl cursor-pointer">Reply</li>
+                            <li className="transition duration-150 transform hover:bg-gray-300 p-2 rounded-2xl cursor-pointer">Info</li>
+                        </ul>
+                    </div>
                     
                 </div>
                 {/* Chat area */}
                 <div className="p-1 h-full">
-                    <div className=" rounded-2xl h-full  bg-white w-full p-2">
+                    <div className=" rounded-2xl h-full  bg-white w-full p-2 pl-10 pr-10">
                         <ChatBubbleSender message="Hey hello world, from blue origin." time="09:30" read={false}/>
                     </div>
                 </div>
@@ -54,7 +69,9 @@ function ChatSection() {
                         <div className="flex w-full space-x-2">
                             <input className="bg-white p-3 w-full h-12 rounded-3xl items-center active:outline-none focus:outline-none border-2 focus:border-[#198A00] text-gray-600" type="text" placeholder="Aa"/>
                             <MicrophoneIcon className="h-6 text-[#198A00] m-2 cursor-pointer"/>
-                            <PaperAirplaneIcon className="h-6 text-[#198A00] rotate-90 m-2 cursor-pointer"/>
+                            <button className="">
+                                <PaperAirplaneIcon className="h-6 text-[#198A00] rotate-90 m-2 cursor-pointer"/>
+                            </button>
                         </div>
                     </div>
                 </div>

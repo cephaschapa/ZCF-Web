@@ -15,7 +15,7 @@ function Midpanel() {
     return (
         <div className="flex flex-col w-4/12 bg-gray-100 h-screen pr-2 pt-0 p-0 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100">
             {/* Header */}
-            <div className="bg-[#198A00] p-4 h-20 rounded-br-2xl rounded-bl-2xl top-0 sticky shadow-lg z-10">
+            <div className="bg-[#198A00] p-4 h-20 rounded-br-2xl rounded-bl-2xl top-0 sticky z-10">
                 <div className="bg-white p-3 px-6 rounded-full">
                     <form className="flex items-center">
                         <input className="flex-grow focus:outline-none text-gray-700 bg-transparent text-sm" type="search" placeholder="Search Chat"/>
@@ -26,7 +26,7 @@ function Midpanel() {
             </div>
             <div className="flex justify-between mt-4 w-full sticky top-20 bg-gray-100 p-1 z-10">
                 <button
-                    className="flex justify-center rounded-2xl p-3 bg-[#198A00] text-sm shadow-md w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
+                    className="flex justify-center rounded-3xl p-3 bg-[#198A00] text-sm shadow-md w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
                     data-toggle="tab" href="#link1" role="tablist"
                     onClick={
                         (e)=>{
@@ -36,7 +36,7 @@ function Midpanel() {
                         }
                     }><ChatAltIcon className="h-6 mr-1"/> Personal</button>
                 <button
-                    className="flex justify-center rounded-2xl p-3 bg-[#198A00] text-sm shadow-md w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
+                    className="flex justify-center rounded-3xl p-3 bg-[#198A00] text-sm shadow-md w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
                     data-toggle="tab" href="#link2" role="tablist"
                     onClick={
                         (e)=>{
