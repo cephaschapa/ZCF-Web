@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Navbar from '../../components/Navbar'
 
-function Contacts() {
+function Contacts(props) {
     return (
         <div>
             <Head>
@@ -13,7 +13,7 @@ function Contacts() {
                 {/* Container wrapper */}
                 <div className="flex w-full">
                     {/* Left navigation Panel */}
-                        <Navbar active={true}/>
+                        <Navbar data={props}/>
                     {/* Mid items panel */}
                         <div className="flex-grow w-40 rounded-2xl bg-gray-100 h-screen p-5 text-white mr-1"></div>
                     {/* Chat section */}
@@ -25,3 +25,134 @@ function Contacts() {
 }
 
 export default Contacts
+
+export async function getServerSideProps(context) {
+    // const accessToken = localStorage.getItem('access_token')
+    // get user information
+    const cookies = new Cookies(context.req, context.res)
+    const accessToken = cookies.get('access_token')
+    // console.log(accessToken)
+    if(!accessToken){
+        // console.log("No token")
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/"
+              }
+        }
+    }else{
+
+    // Sync room state - Cradle of chat
+    
+    const syncData = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/sync',{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    // console.log(syncData.account_data)
+
+    // get user id
+    const res = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/account/whoami',{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    const user_id = res.data.user_id
+
+    // User Profile Information - Display Name
+    const res1 = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/profile/${user_id}`,{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })  
+
+    // User Profile Information - Avatar Url
+    const res2 = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/profile/${user_id}/avatar_url`,{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    
+      const r = axios.get('https://chat.dazmessenger.com/_matrix/client/r0/joined_rooms',{
+          headers: {
+                  'Content-Type': 'application/json',
+                  accept: '*/*',
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${accessToken}`
+          }
+      }).then((response) => {
+        // console.log(response)
+      })
+
+     
+      
+        const g = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/joined_rooms',{
+          headers: {
+            'Content-Type': 'application/json',
+            accept: '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          }
+        })
+          // console.log(res)
+        const data = g.data.joined_rooms
+          // console.log(data)
+         const arr = data.map(async (d)=>{
+            // console.log(d)
+            await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${d}/joined_members`,{
+            headers: {
+              'Content-Type': 'application/json',
+              accept: '*/*',
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })})
+            // console.log(arr.data)
+            // const object  = arr.data.joined_rooms
+            // console.log(object)
+            // console.log(d)
+            // let array = Object.keys(object).map(k => object[k]);
+            // // console.log(array[0])
+            // const chatInfo = [array[0], {room_id:d}]
+            
+            // console.log(chatInfo)
+
+            // console.log(chatInfo)
+    const displayname = res1.data.displayname
+    const avatar_url = res2.data.avatar_url
+    const accountData = syncData.data.account_data
+    const deviceList = syncData.data.device_lists
+    const presenceList = syncData.data.presence
+    const rooms = syncData.data.rooms
+    const groups = syncData.data.groups
+
+    console.log(rooms)
+    
+    
+    return {
+        props: {
+            user_id,
+            displayname,
+            accessToken,
+            accountData,
+            deviceList,
+            presenceList,
+            rooms,
+            groups,
+        }
+    }
+ }
+    
+}
