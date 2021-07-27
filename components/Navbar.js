@@ -9,8 +9,17 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import MarketPlaceItems from './MarketPlaceItems'
 import NavFooter from './NavFooter'
+import getUserData from '../helpers/getUserData'
+import Cookies from 'cookies'
+import axios from 'axios'
+import {useCookies} from 'react-cookie'
+// import {logout} from '../helpers/auth'
 
-function Navbar({active}) {
+function Navbar(props) {
+   
+    const accessToken = props.data.accessToken
+    
+    const [cookies, setCookie, removeCookie] = useCookies('access_token')
     // Popup profile menu
     const router = useRouter()
     const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
@@ -37,20 +46,44 @@ function Navbar({active}) {
     const closeDropdownPopover = () => {
         setDropdownPopoverShow(false)
     }
+    function submitForm(e) {
+        e.preventDefault()
+        logout()
+    }
 
-    // Drawer menu
-    const btnDrawerRef = createRef();
-    const drawerMenuRef = createRef();
-
-    const minimizeMenu = () => {
-        // createPopper(btnDrawerRef.current, drawerMenuRef.current, {
-        //     placement: 'bottom-start'
+    // User Profile Data
+    const {displayname, avatar_url} = props.data
+    
+    // logout handler
+    async function logout (e) {
+        e.preventDefault();
+        
+        // const at = accessToken
+        // console.log(at)
+        // const res = await axios.post('https://chat.dazmessenger.com/_matrix/client/r0/logout',{
+        //     headers: {
+        //             'Content-Type': 'application/json',
+        //             'accept': '*/*',
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `Bearer ${at}`
+        //     }
         // })
-        setDrawerMenu(true)
+        // console.log(at)
+        // console.log(res)
+        removeCookie('access_token')
+        router.push('/')
     }
-    const expandDrawerMenu = () => {
-        // setDrawerMenu(false)
-    }
+
+    // Get acronym
+    let str = displayname
+    let matches = str.match(/\b(\w)/g)
+    let acronym = matches.join('')
+    
+
+    // Random Color generator
+    let colors = ["#ffffff", "#E91E63", "#673AB7", "#03A9F4", "#FF5722"]
+    let setBg = Math.floor(Math.random() * colors.length)
+    let ranBg = colors[setBg]
 
     return (
         <div>
@@ -59,14 +92,17 @@ function Navbar({active}) {
                     <div className="flex border-b border-[#48ac32] pb-5 sticky top-0 bg-[#198A00] z-10">
                         {/* User Profile */}
                         <div className="flex space-x-4 items-center w-4/5">
-                            <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52} 
-                            />
+                            {/* <Image src= {avatar_url} alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52}  */}
+                                {/* /> */}
+                            <div className={`flex items-center justify-center text-2xl font-bold pt-1 h-14 w-14 bg-[#fff] rounded-full text-gray-500`}>
+                                {acronym}
+                            </div>
                             <button 
                                 type="button"
                                 ref={btnDropdownRef}
                                 onClick={() => {
                                     dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover()
-                                }}  className="flex font-bold p-2 rounded-2xl transition duration-150 transform focus:bg-white focus:text-[#198A00]"  >John<span><ChevronDownIcon className="h-6"/></span>
+                                }}  className="flex flex-row font-bold p-2 rounded-2xl transition duration-150 transform focus:bg-white focus:text-[#198A00] text-sm"  >{displayname}<span></span>
                                 </button>
                         </div>
                         {/* Dropdown Content */}
@@ -78,8 +114,10 @@ function Navbar({active}) {
                             <a href="#" className="text-gray-500 block px-4 py-2 text-sm hover:bg-gray-100 rounded-xl active:bg-[#198A00] transition duration-100 transform active:text-white flex items-center group" role="menuitem" tabIndex="-1" id="menu-item-0"><CogIcon className="h-6 text-gray-400 group"/> <span className="ml-1 mt-1">Account settings</span></a>
                             <a href="#" className="text-gray-500 block px-4 py-2 text-sm hover:bg-gray-100 rounded-xl active:bg-[#198A00] transition duration-100 transform active:text-white flex" role="menuitem" tabIndex="-1" id="menu-item-1"><SupportIcon className="h-6 text-gray-400 group"/> <span className="ml-1 mt-1">Support</span></a>
                             <a href="#" className="text-gray-500 block px-4 py-2 text-sm hover:bg-gray-100 rounded-xl active:bg-[#198A00] transition duration-100 transform active:text-white flex" role="menuitem" tabIndex="-1" id="menu-item-2"><InformationCircleIcon className="h-6 text-gray-400 group"/> <span className="ml-1 mt-1">About</span></a>
-                            <form method="POST" action="#" role="none">
-                                <button type="submit" className="flex text-[#198A00] block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">
+                            <form method="POST" action="#" role="none" onSubmit={submitForm}>
+                                <button onClick={
+                                    logout
+                                } type="submit" className="flex text-[#198A00] block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">
                                 <LogoutIcon className="h-6 text-gray-400 group"/> <span className="ml-1 mt-1">Sign out</span>
                                 </button>
                             </form>
@@ -88,7 +126,7 @@ function Navbar({active}) {
                         {/* Toggle Menu */}
                         <div className="flex w-1/3 pr-2 justify-end space-x-3 items-center">
                             <BellIcon className="h-5 cursor-pointer"/>
-                            <TranslateIcon className={`${drawerMenuShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"} h-5 cursor-pointer`} onClick={drawerMenuShow ? expandDrawerMenu(): minimizeMenu()}/>
+                            <TranslateIcon className="h-5 cursor-pointer"/>
                         </div>
                     </div>  
                 {/* navigation */}
@@ -190,3 +228,4 @@ function Navbar({active}) {
 }
 
 export default Navbar
+

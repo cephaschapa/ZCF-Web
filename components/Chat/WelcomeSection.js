@@ -1,14 +1,46 @@
 import WelcomeBtn from './WelcomeBtn'
 import {ChatIcon, UserGroupIcon, UserAddIcon, SearchIcon, LockClosedIcon} from '@heroicons/react/solid'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { ClipboardCopyIcon } from '@heroicons/react/outline'
 import Suggestions from './Suggestions'
+import axios from 'axios'
+import {useRouter} from 'next/router'
 
-function WelcomeSection() {
+function WelcomeSection(props) {
+  console.log(props)
+  const {accessToken} = props.data
     const [showModal1, setShowModal1] = useState(false)
     const [showModal2, setShowModal2] = useState(false)
     const [showModal3, setShowModal3] = useState(false)
     const [isPrivate, setIsprivate] = useState(false)
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState([])
+    const [people, setPeople] = useState([])
+    const router = useRouter()
+
+    
+
+    // Search for people
+    function queryInput(e){
+      e.preventDefault()
+      setQuery(e.target.value)      
+      // search users
+      axios.post('https://chat.dazmessenger.com/_matrix/client/r0/user_directory/search',{
+          "limit": 10,
+          "search_term": query
+      },{
+          headers: {
+                  'Content-Type': 'application/json',
+                  accept: '*/*',
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${accessToken}`
+          }
+      }).then((res)=>{
+        const result = res.data.results
+        // console.log(result)
+        setResults(result)
+      })
+    }
     return (
         <div className="flex flex-col items-center w-full h-screen pt-96">
             <h1 className="text-4xl text-gray-500 font-bold mb-10">ZCF Messenger</h1>
@@ -62,27 +94,83 @@ function WelcomeSection() {
                           {/*body*/}
                           <div className="relative p-6 flex-auto">
                             <p className="">Begin a new conversation with someone by entering their username or email.</p>
-                            <div className="my-4 text-blueGray-500  leading-relaxed">
-                              <form className="">
-                                  <div className="flex text-lg">
-                                    <input type="text" className="flex flex-grow bg-gray-100 p-2 mr-2 rounded-2xl focus:outline-none"/>
-                                    <button type="submit" className="flex flex-row justify-center rounded-2xl bg-[#198A00] w-10 text-white items-center"><SearchIcon className="h-6"/></button>
-                                  </div>
-                              </form>
-                              <div className="flex flex-col">
-                                <p className="mt-10">Suggestions</p>
-                                <Suggestions name="Kampamba Kapah"/>
-                                <Suggestions name="Bright Kapah"/>
-                                <Suggestions name="Cephas Kapah"/>
-                              </div>
-                              <p className="mt-10 mb-2">Or send an invitation link</p>
-                              <div className="flex border border-[#198A00] w-full p-2">
+                            <form className="">
+                                    <div className="flex text-lg">
+                                      <input value={query} type="text" onChange={queryInput} className="flex flex-grow bg-gray-100 p-2 mr-2 rounded-2xl focus:outline-none"/>
+                                      <button type="submit" className="flex flex-row justify-center rounded-2xl bg-[#198A00] w-10 text-white items-center"><SearchIcon className="h-6"/></button>
+                                    </div>
+                                </form>
+                                <div className="flex flex-col max-h-72">
+                                  <p className="mt-10">Suggestions</p>
+                                   <ul className="overflow-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100">
+                                    {
+                                      results.map((resp)=>{
+                                          return(
+                                            <li key={resp.user_id} className="flex flex-row  items-center mt-4 space-x-2 cursor-pointer transition p-2 pr-4 rounded-2xl duration-150 transform hover:bg-gray-100">
+                                              <a href="#" className="flex justify-between w-full" onClick={async (e)=>{
+                                                console.log()
+                                                // Create group
+                                                const res = await axios.post('https://chat.dazmessenger.com/_matrix/client/r0/createRoom',                                 
+                                                  {
+                                                    "creation_content": {
+                                                      "m.federate": true
+                                                    },
+                                                    "name": "D",
+                                                    "preset": "private_chat",
+                                                    "topic": "All about happy hour"
+                                                  },
+                                                  {
+                                                    headers: {
+                                                      'Content-Type': 'application/json',
+                                                      accept: '*/*',
+                                                      'Content-Type': 'application/json',
+                                                      'Authorization': `Bearer ${accessToken}`
+                                                    }
+                                                  }
+
+                                                )
+                                                console.log(res.data.room_id)
+                                                const roomId = res.data.room_id
+                                                const userId = resp.user_id
+
+                                                // Invite
+                                                const res2 = await axios.post(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${roomId}/invite`,
+                                                  {
+                                                      "user_id": userId,
+                                                  },                                
+                                                  
+                                                  {
+                                                    headers: {
+                                                      'Content-Type': 'application/json',
+                                                      accept: '*/*',
+                                                      'Content-Type': 'application/json',
+                                                      'Authorization': `Bearer ${accessToken}`
+                                                    }
+                                                  }
+
+                                                )
+                                                console.log(res2)
+                                                const status = res2.status
+                                              
+                                                // Reroute to page
+
+                                                if(status==200){
+                                                  router.push({pathname: `chat/${roomId}`, query:{u:userId}})
+                                                }
+                                              }}>
+                                                <div className="flex items-center space-x-3">
+                                                  <div className="h-12 w-12 bg-gray-200 rounded-full"></div>
+                                                  <p>{resp.display_name}</p>
+                                                </div>
+                                                <button className="bg-[#198A00] p-2 w-20 text-white rounded-2xl">Invite</button>
+                                              </a>
+                                            </li>
+                                          )
+                                        })
+                                      }
+                                   </ul>
                                   
-                                  <input disabled className="flex flex-grow" value="https://zcf.messenger.com/#/@iamcephas:zcf.messenger.org"/>
-                                  <ClipboardCopyIcon className="h-6 cursor-pointer text-[#198A00]" title="Copy to clipboard" onClick={() => alert('Link copied to clipboard')}/>
-                                
-                              </div>
-                            </div>
+                                </div>
                           </div>
                           {/*footer*/}
                           <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">

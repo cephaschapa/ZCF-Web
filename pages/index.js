@@ -1,21 +1,37 @@
+import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useRef} from 'react'
+import {useRef, useState, useEffect} from 'react'
+import{useRouter} from 'next/router'
+import {login} from '../helpers/auth'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
-  const usernameRef = useRef(null)
-  const passwordRef = useRef(null)
-
-  const postData = (e) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
+  
+  function submitForm(e) {
     e.preventDefault()
-
-    const username = usernameRef.current.value
-    const password = passwordRef.current.value
-
-    console.log(username, password)
-
+    login(username, password).then(
+      (result)=> {
+        if(result == true){
+          router.push('chat/')
+        }
+      },
+      (error)=> {
+        if(error){
+          toast.error('Either Username or Password is incorrect')
+        }
+      }
+    )
+   
+    
   }
+
+
   return (
     <div>
       <Head>
@@ -37,16 +53,24 @@ export default function Home() {
               {/* <p className="text-[#198A00] pt-3 w-full">Be part of the best social experience.</p> */}
               <div className="items-center py-4">
                 
-                <form className="w-full">
+                <form className="w-full" method="post" onSubmit={submitForm}>
+                  {/* <p className="text-red-500">{message}</p> */}
+                  <ToastContainer 
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
                   <p className="pt-2 pb-2 text-gray-500">Username*</p>
-                  <input type="text" className="flex w-full border-[#198A00] border p-4 rounded-full focus:outline-none transition duration-150 transform focus:border-2" placeholder="i.e johndoe100" ref={usernameRef}/>
+                  <input value={username} onChange={e=>setUsername(e.target.value)} type="username" className="flex w-full border-[#198A00] border p-4 rounded-full focus:outline-none transition duration-150 transform focus:border-2" placeholder="i.e johndoe100" required/>
                   <p className="pt-6 pb-2 text-gray-500">Password*</p>
-                  <input type="password" className="flex w-full border-[#198A00] border p-4 rounded-full focus:outline-none focus:border-[#198A00] transition duration-150 transform focus:border-2" placeholder="Min 8 Characters" ref={passwordRef}/>
+                  <input value={password} onChange={e => setPassword(e.target.value)} type="password" className="flex w-full border-[#198A00] border p-4 rounded-full focus:outline-none focus:border-[#198A00] transition duration-150 transform focus:border-2" placeholder="Min 8 Characters" minLength="8" required/>
 
                   <div className="flex items-center">
                      <span className="mt-4 text-gray-500">Forgot Password?</span>
                   </div>
-                  <button onClick={postData} className="border-2 mt-2 w-full border-[#198A00] bg-[#198A00] border-2 p-4 rounded-full items-center text-white shadow-md transition duration-150 transform hover:shadow-xl">LOGIN</button>
+                  <button type="submit" className="border-2 mt-2 w-full border-[#198A00] bg-[#198A00] border-2 p-4 rounded-full items-center text-white shadow-md transition duration-150 transform hover:shadow-xl">LOGIN</button>
                   
                 </form>
                 <div className="mt-4 mx-auto center">

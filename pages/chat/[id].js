@@ -2,8 +2,17 @@ import Head from 'next/head'
 import Navbar from '../../components/Navbar'
 import Midpanel from '../../components/Midpanel/Midpanel'
 import ChatSection from '../../components/Chat/ChatSection'
+import axios from 'axios'
+import Cookies from 'cookies'
+import {useState} from 'react'
+import {useRouter} from 'next/router'
 
-function Chat() {
+
+function Chat(props) {
+    const router = useRouter()
+    const {u, id} = router.query
+    console.log(u)
+    
     return (
         <div className="h-screen">
             <Head>
@@ -15,13 +24,13 @@ function Chat() {
                 {/* Container wrapper */}
                 <div className="flex w-full">
                     {/* Left navigation Panel */}
-                        <Navbar active={true}/>
+                        <Navbar data={props}/>
                     {/* Mid items panel */}
-                        <Midpanel />
+                        <Midpanel  data={props}/>
                     {/* Chat section */}
                     {/* <ChatSection /> */}
                     {/* Chat first use and no active chat section */}
-                        <ChatSection />
+                        <ChatSection  data={props}/>
                 </div>
             </main>
         </div>
@@ -29,3 +38,81 @@ function Chat() {
 }
 
 export default Chat
+
+
+export async function getServerSideProps(context) {
+    // const accessToken = localStorage.getItem('access_token')
+    // get user information
+    const cookies = new Cookies(context.req, context.res)
+    const accessToken = cookies.get('access_token')
+    console.log(accessToken)
+    if(!accessToken){
+        console.log("No token")
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/"
+              }
+        }
+    }else{
+    // get user id
+    const res = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/account/whoami',{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    const user_id = res.data.user_id
+
+    // User Profile Information - Display Name
+    const res1 = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/profile/${user_id}`,{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })  
+
+    // User Profile Information - Avatar Url
+    const res2 = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/profile/${user_id}/avatar_url`,{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    }) 
+    const profileId = context.query.u
+    // Chat information - 
+    const res3 = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/profile/${profileId}`,{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })
+
+    // Get messages 
+   
+
+    const profile_name = res3.data.displayname
+    const displayname = res1.data.displayname
+    const avatar_url = res2.data.avatar_url
+    console.log("hello ==="+context.query.u)
+    
+    
+    return {
+        props: {
+            user_id,
+            displayname,
+            accessToken,
+            profileId,
+            profile_name
+        }
+    }
+  }
+}

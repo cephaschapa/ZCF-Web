@@ -2,17 +2,40 @@ import { EmojiHappyIcon, FilmIcon, InformationCircleIcon, MicrophoneIcon, PaperA
 import { DocumentTextIcon, DotsVerticalIcon, MusicNoteIcon, PhoneIcon } from '@heroicons/react/solid'
 import Image from 'next/image';
 // import Picker from 'emoji-picker-react';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import ChatBubbleSender from './ChatBubbleSender';
 import ChatGroups from './ChatGroups';
+import Cookies from 'cookies';
+import {useRouter} from 'next/router';
+import axios from 'axios'
+import moment from 'moment'
 
-function ChatSection() {
+function ChatSection(props) {
+    console.log(props)
+    const router = useRouter()
+
     const [openPanel, setOpenPanel] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
+    const [messages, setMessages] = useState([])
+    const room_id = router.query.id
+    console.log(router.query.id)
     // const [chosenEmoji, setChosenEmoji] = useState(null)
     // const onEmojiClick = (e, emojiObject) => {
     //     setChosenEmoji(emojiObject);
     // }
+    
+
+    useEffect(async () => {
+       await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${room_id}/messages?from=t7-1004_0_0_0_0_0_0_0_0`, {
+           headers:{
+               "Content-Type": "application/json",
+               "accept": '*/*',
+               "Authorization": `Bearer ${props.data.accessToken}`
+           }
+        }).then(response =>setMessages(response.data.chunk))
+        
+    }, [])
+
     return (
         <div className="flex w-full h-screen text-white bg-gray-100 rounded-2xl">
             <div className="flex flex-col w-full justify-between transition duration-150 ease-in-out">
@@ -23,7 +46,7 @@ function ChatSection() {
                         <div className="p-1 h-1 w-1 bg-[#44c526] float-right mt-8 -ml-16 bor rounded-full z-10 relative border-2 border-white"></div>
                     </div>
                     <div className="flex flex-col ml-2 p-2 h-full">
-                        <p className="font-bold text-sm">Matt</p>
+                        <p className="font-bold text-sm">{props.data.profile_name}</p>
                         <p className="text-xs text-gray-200">Online</p>
                     </div>
                     <div className="flex ml-2 p-3 h-full justify-end w-full space-x-8 items-center">
@@ -58,7 +81,16 @@ function ChatSection() {
                 {/* Chat area */}
                 <div className="p-1 h-full">
                     <div className=" rounded-2xl h-full  bg-white w-full p-2 pl-10 pr-10">
-                        <ChatBubbleSender message="Hey hello world, from blue origin." time="09:30" read={false}/>
+                        {
+                            messages.map(message=>{
+                                console.log(message)
+                                if(message.type === "m.room.message"){
+                                    // console.log()
+                                    return <ChatBubbleSender key={Math.random() * (1 - 2000000000) + 1} message={message.content.body} time={moment(message.origin_server_ts).format('LT')} read={false}/>
+                                }
+                                
+                            })
+                        }
                     </div>
                 </div>
                 <div className="flex sticky p-1 h-24 space-x-4 bottom-2">
@@ -84,8 +116,8 @@ function ChatSection() {
                     <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={80} width={80} />
                 </div>
                 <div className="flex flex-col items-center">
-                    <p className="font-bold text-gray-500 text-sm">Matt Thomson</p>
-                    <p className="text-sm text-gray-400">matt@somemail.com</p>
+                    <p className="font-bold text-gray-500 text-sm">{props.data.profile_name}</p>
+                    <p className="text-sm text-gray-400">{props.data.profileId}</p>
                 </div>
                 <div className="flex flex-row justify-center items-center w-full border-b border-gray-300 pb-6">
                     <button className="bg-[#198A00] m-2 p-2 rounded-full"><VideoCameraIcon className="h-7"/></button>
@@ -112,3 +144,6 @@ function ChatSection() {
 }
 
 export default ChatSection
+
+
+
