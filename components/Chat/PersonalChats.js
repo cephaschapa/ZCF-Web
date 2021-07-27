@@ -6,12 +6,11 @@ function PersonalChats(props) {
     
     
     return (
-        // <div> { ChatData.length < 1 ? <p className="text-gray-400 bg-white p-2 h-28 rounded-2xl">You currently have no chats. Begin a new one by clicking the plus button.</p> :
-            
-           <div> <ul>
-           
-                <Link  key={props.id}  href={`/chat/`} className="focus:bg-gray-400">
-                    <li  id="link1">
+        // <div> { ChatData.length < 1 ? <p className="text-gray-400 bg-white p-2 h-28 rounded-2xl">You currently have no chats. Begin a new one by clicking the plus button.</p> 
+           <div> 
+               <ul>
+                <Link  key={props.id}  href={`/chat/${props.id}?u=${props.state_key}`} className="focus:bg-gray-400">
+                    <li key={props.id}  id="link1">
                         <div className={` text-gray-500 mb-2 bg-white rounded-2xl flex items-center p-2 transition duration-200 transform hover:shadow-md cursor-pointer z-0 focus:bg-[#9fd493]`}>
                             <div className="flex flex-col w-24 h-full">
                                 {/* <Image src={data.profileImage} alt="userpicture" height="60" width="60"/> */}

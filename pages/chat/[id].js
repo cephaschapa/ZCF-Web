@@ -55,6 +55,18 @@ export async function getServerSideProps(context) {
               }
         }
     }else{
+
+    // Sync room state - Cradle of chat
+    
+    const syncData = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/sync',{
+        headers: {
+                'Content-Type': 'application/json',
+                 accept: '*/*',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    console.log(syncData)
     // get user id
     const res = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/account/whoami',{
         headers: {
@@ -102,17 +114,27 @@ export async function getServerSideProps(context) {
     const profile_name = res3.data.displayname
     const displayname = res1.data.displayname
     const avatar_url = res2.data.avatar_url
-    console.log("hello ==="+context.query.u)
-    
-    
+    // console.log("hello ==="+context.query.u)
+    const accountData = syncData.data.account_data
+    const deviceList = syncData.data.device_lists
+    const presenceList = syncData.data.presence
+    const rooms = syncData.data.rooms
+    const groups = syncData.data.groups
+
     return {
         props: {
             user_id,
             displayname,
             accessToken,
             profileId,
-            profile_name
+            profile_name,
+            accountData,
+            deviceList,
+            presenceList,
+            rooms,
+            groups,
         }
     }
   }
 }
+

@@ -28,11 +28,7 @@ function Midpanel(props) {
     // console.log(entries.join)
     const object = entries.join
     const obj = Object.entries(object)
-    console.log(obj)
-    
-
-    
-
+    // console.log(obj)  
      
     useEffect(() => {
       setContacts(obj)
@@ -127,12 +123,11 @@ function Midpanel(props) {
                           return chunk.map(data=>{
                             // console.log(data)
                             if(data.content.membership==="invite"){
-                              console.log(data)
+                              console.log(data.state_key)
                               return (
-                                <PersonalChats id={contact[0]} display_name={data.content.displayname}/>
+                                <PersonalChats id={contact[0]} display_name={data.content.displayname} state_key={data.state_key}/>
                               )
                             }
-                        
                           })
                           // console.log(chunk)
                         })

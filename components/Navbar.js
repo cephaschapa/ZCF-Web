@@ -2,7 +2,7 @@ import Image from 'next/image'
 import {MenuIcon, ChevronDownIcon, CogIcon, BellIcon, InformationCircleIcon, LogoutIcon, UserIcon, SupportIcon, CubeTransparentIcon, ShieldCheckIcon, ChevronRightIcon} from '@heroicons/react/solid'
 import {ChatAltIcon,UserAddIcon, UserGroupIcon, SearchIcon, HeartIcon, ChatIcon, CollectionIcon, LightningBoltIcon, ChipIcon, FilmIcon, WifiIcon, TranslateIcon, TicketIcon, OfficeBuildingIcon} from '@heroicons/react/outline'
 import {createPopper} from '@popperjs/core'
-import {useState, createRef} from 'react'
+import {useState, createRef, useEffect} from 'react'
 import Navitems from './Navitems';
 import NavSections from './NavSections';
 import Link from 'next/link'
@@ -16,7 +16,7 @@ import {useCookies} from 'react-cookie'
 // import {logout} from '../helpers/auth'
 
 function Navbar(props) {
-   
+    console.log(props)
     const accessToken = props.data.accessToken
     
     const [cookies, setCookie, removeCookie] = useCookies('access_token')
@@ -29,6 +29,22 @@ function Navbar(props) {
     const [dropDown2, setDropDown2] = useState(0)
     const [dropDown3, setDropDown3] = useState(0)
     const [dropDown4, setDropDown4] = useState(0)
+    const [active, setActive] = useState(false)
+
+    console.log(props.data.presenceList.events[0].content.presence)
+    // setting user presence state
+    const p = props.data.presenceList.events[0].content.presence
+    // setting user presence state
+    const presence = () => {
+        // on mouse action
+    }
+    useEffect(() => {
+        if( p === "online" ){
+            setActive(true)
+        }
+    }, []);
+
+    
 
     // Drawer navigation menu slider
     const [drawerMenuShow, setDrawerMenu] = useState(false);
@@ -94,8 +110,11 @@ function Navbar(props) {
                         <div className="flex space-x-4 items-center w-4/5">
                             {/* <Image src= {avatar_url} alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52}  */}
                                 {/* /> */}
-                            <div className={`flex items-center justify-center text-2xl font-bold pt-1 h-14 w-14 bg-[#fff] rounded-full text-gray-500`}>
-                                {acronym}
+                            <div className="flex flex-row">
+                                <div className={`flex items-center justify-center text-2xl font-bold pt-1 h-14 w-14 bg-[#fff] rounded-full text-gray-500`}>
+                                    {acronym}
+                                </div>
+                                {active?<div className="h-4 w-4 bg-[#8bdd78] top-10 -ml-5 rounded-full relative"></div>:<div className="h-4 w-4 bg-gray top-10 -ml-5 rounded-full relative"></div>}
                             </div>
                             <button 
                                 type="button"

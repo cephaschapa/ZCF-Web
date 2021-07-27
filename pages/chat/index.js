@@ -12,13 +12,21 @@ import {useCookies} from 'react-cookie'
 import{useEffect, useState} from 'react'
 
 function ChatHome(props) {
+    const [active, setActive] = useState(false)
+
+    console.log(props.presenceList.events[0].content.presence)
+    // setting user presence state
+    const p = props.presenceList.events[0].content.presence
+    const presence = () => {
+        console.log("active")
+    }
     
     const [cookies, setCookie, removeCookie] = useCookies('access_token')
     console.log(cookies.access_token)
     const router = useRouter()
     return (
         
-        <div className="h-screen">
+        <div className="h-screen" onMouseDown={presence}>
             {
                 props.t == false ? window.location.reload :
                 <>
