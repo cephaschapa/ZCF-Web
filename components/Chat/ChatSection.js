@@ -24,16 +24,11 @@ function ChatSection(props) {
     //     setChosenEmoji(emojiObject);
     // }
     
+    // console.log(props.data.messages)
 
-    useEffect(async () => {
-       await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${room_id}/messages?from=t7-1004_0_0_0_0_0_0_0_0`, {
-           headers:{
-               "Content-Type": "application/json",
-               "accept": '*/*',
-               "Authorization": `Bearer ${props.data.accessToken}`
-           }
-        }).then(response =>setMessages(response.data.chunk))
-        
+    useEffect( () => {
+      setMessages(props.data.messages)
+    //   console.log()
     }, [])
 
     return (
