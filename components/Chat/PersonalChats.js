@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import router from "next/router"
 function PersonalChats(props) {
-    console.log(props)
+    // console.log(props)
     
     
     return (

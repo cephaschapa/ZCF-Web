@@ -8,10 +8,13 @@ import ChatGroups from '../../components/Chat/ChatGroups'
 import ChatBubbleSender from '../../components/Chat/ChatBubbleSender'
 import axios from 'axios'
 import Cookies from 'cookies'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {useRouter} from 'next/router'
 import Image from 'next/image'
 import moment from 'moment'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import { TypingAnimation } from 'react-native-typing-animation';
 
 function Chat(props) {
     const router = useRouter()
@@ -20,8 +23,44 @@ function Chat(props) {
     const [openPanel, setOpenPanel] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
     const [messages, setMessages] = useState([])
+    const [isTyping, setIsTyping] = useState(false)
     const room_id = router.query.id
-    console.log(router.query.id)
+    // console.log(props)
+    
+
+    const [input, setInput] = useState('')
+    const scrollToBottom = useRef(null)
+
+    const sendMessage = async (e) => {
+        e.preventDefault()
+        console.log(input)
+        if(input===''){
+            toast.warning('Oops ... you cannot send an empty message')
+        }
+        else{
+            const data = await axios.put(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${room_id}/send/m.room.message/${Math.random() * (1 - 20000000000000000000000000) + 1}`,{
+                "msgtype":"m.text",
+                "body": input
+            }, {
+                headers:{
+                    "Content-Type": "application/json",
+                    "accept": '*/*',
+                    "Authorization": `Bearer ${props.accessToken}`
+                }
+            })
+            setInput('')
+            scrollToBottom.current.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            })
+        }
+    }
+
+    
+
+    const updateTypingState = (e) => {
+        console.log("cephas")
+    }
 
 
     // const room_id = context.query.id
@@ -35,8 +74,10 @@ function Chat(props) {
     //        }
     //     })
 
+    // get user typing state
+
     useEffect(async () => {
-        const data = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${room_id}/messages?from=t7-1004_0_0_0_0_0_0_0_0`, {
+        const data = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${room_id}/messages?from=t7-1004_0_0_0_0_0_0_0_0&limit=10000000000000000000000000000`, {
            headers:{
                "Content-Type": "application/json",
                "accept": '*/*',
@@ -46,7 +87,8 @@ function Chat(props) {
 
 
     console.log(data.data.chunk)
-    const messages = data.data.chunk
+    // const messages = data.data.chunk
+    
         setMessages(messages)
     }, [messages])
     
@@ -110,30 +152,65 @@ function Chat(props) {
                                 
                             </div>
                             {/* Chat area */}
-                            <div className="p-1 h-full">
-                                <div className=" rounded-2xl h-full  bg-white w-full p-2 pl-10 pr-10">
+                            <div className="p-1 pr-0 h-full overflow-auto">
+                                <div className=" rounded-2xl h-full  bg-white w-full p-2 pl-2 overflow-auto pb-12 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 pr-4">
                                     {
                                         messages.map(message=>{
-                                            console.log(message)
+                                            // console.log(message)
+
                                             if(message.type === "m.room.message"){
-                                                return <ChatBubbleSender key={Math.random() * (1 - 2000000000) + 1} message={message.content.body} time={moment(message.origin_server_ts).format('LT')} read={false}/>
+                                                return <ChatBubbleSender user = {props.user_id} sender={message.sender} key={Math.random() * (1 - 2000000000) + 1} message={message.content.body} time={moment(message.origin_server_ts).format('LT')} read={false}/>
+                                            }
+                                            if(!message.type === "m.room.message"){
+                                                return <p className="text-gray-500">Loading messages</p>
                                             }
                                         })
                                     }
-                                </div>
-                            </div>
-                            <div className="flex sticky p-1 h-24 space-x-4 bottom-2">
-                                <div className="flex bg-white rounded-2xl mt-1 h-full w-full space-x-4 items-center p-3">
-                                    <PaperClipIcon className="h-6 text-[#198A00] cursor-pointer"/>
-                                    <EmojiHappyIcon className="h-6 text-[#198A00] cursor-pointer"/>
-                                    
-                                    <div className="flex w-full space-x-2">
-                                        <input className="bg-white p-3 w-full h-12 rounded-3xl items-center active:outline-none focus:outline-none border-2 focus:border-[#198A00] text-gray-600" type="text" placeholder="Aa"/>
-                                        <MicrophoneIcon className="h-6 text-[#198A00] m-2 cursor-pointer"/>
-                                        <button className="">
-                                            <PaperAirplaneIcon className="h-6 text-[#198A00] rotate-90 m-2 cursor-pointer"/>
-                                        </button>
+                                    <div ref={scrollToBottom}></div>
+                                    <div className={`${isTyping? "block": "hidden"} text-black`}>
+                                        <div class="chat-bubble">
+                                            <div class="typing">
+                                            <div class="dot"></div>
+                                            <div class="dot"></div>
+                                            <div class="dot"></div>
+                                        </div>
                                     </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div className="flex sticky p-1 pl-0 h-24 space-x-4 bottom-2">
+                                <div className="flex bg-white rounded-2xl mt-1 h-full w-full space-x-1 items-center p-3">
+                                    <PaperClipIcon className="h-8 p-1 text-gray-500 cursor-pointer hover:text-[#198A00] hover:bg-gray-100 rounded-full"/>
+                                    <EmojiHappyIcon className="h-8 p-1 text-gray-500 cursor-pointer hover:text-[#198A00] hover:bg-gray-100 rounded-full"/>
+                                    <form className="w-full" onSubmit={
+                                            sendMessage
+                                        }>
+                                        <div className="flex w-full space-x-2">
+                                        <ToastContainer 
+                                            closeOnClick
+                                            rtl={false}
+                                            pauseOnFocusLoss
+                                            draggable
+                                            pauseOnHover
+                                            position="bottom-right"
+                                        />
+                                            <input onChange={(e)=>{ 
+                                                setInput(e.target.value);
+                                                if(e.target.value != ""){
+                                                    setIsTyping(true);
+                                                    updateTypingState()
+                                                }else{
+                                                    setIsTyping(false);
+                                                    
+                                                }
+                                            }} value={input} className="bg-white p-3 w-full h-12 rounded-3xl items-center active:outline-none focus:outline-none border-2 text-gray-600 transition transform duration-150 border-gray-500" type="text" placeholder="Aa"/>
+                                            <MicrophoneIcon className={`${input==''? 'block':'hidden'} h-8 p-1 text-gray-500 hover:text-[#198A00] hover:bg-gray-100 rounded-fullm-2 mt-2 cursor-pointer`}/>
+                                            <button className="">
+                                                <PaperAirplaneIcon className={`${input == ''? 'transition transform duration-150 scale-0': 'transition transform duration-150 scale-100'} h-8 p-1 text-gray-500 hover:text-[#198A00] hover:bg-gray-100 rounded-full mt- rotate-90 ml-2 cursor-pointer`}/>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +219,7 @@ function Chat(props) {
                                 <XIcon className="h-8 w-8 text-[#198A00] bg-gray-100 rounded-full p-2 cursor-pointer"/>
                             </div> */}
                             <div className="flex flex-col items-center h-24">
-                                <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={80} width={80} />
+                               <div className="h-24 w-24 bg-gray-200 rounded-full"></div>{/* <Image src="/assets/profilepic.png" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={80} width={80} /> */}
                             </div>
                             <div className="flex flex-col items-center">
                                 <p className="font-bold text-gray-500 text-sm">{props.profile_name}</p>

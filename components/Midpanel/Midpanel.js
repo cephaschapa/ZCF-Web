@@ -122,10 +122,10 @@ function Midpanel(props) {
                           const chunk = contact[1].timeline.events
                           return chunk.map(data=>{
                             // console.log(data)
-                            if(data.content.membership==="invite"){
-                              console.log(data.state_key)
+                            if(data.content.membership === "invite"){
+                              // console.log(data)
                               return (
-                                <PersonalChats id={contact[0]} display_name={data.content.displayname} state_key={data.state_key}/>
+                                <PersonalChats id={contact[0]} display_name={data.sender} state_key={data.state_key}/>
                               )
                             }
                           })

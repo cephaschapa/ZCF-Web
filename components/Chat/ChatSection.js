@@ -75,7 +75,7 @@ function ChatSection(props) {
                 </div>
                 {/* Chat area */}
                 <div className="p-1 h-full">
-                    <div className=" rounded-2xl h-full  bg-white w-full p-2 pl-10 pr-10">
+                    <div className=" rounded-2xl h-full  bg-red-100 w-full p-2">
                         {
                             messages.map(message=>{
                                 console.log(message)

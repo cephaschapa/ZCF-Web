@@ -92,8 +92,8 @@ function Navbar(props) {
 
     // Get acronym
     let str = displayname
-    let matches = str.match(/\b(\w)/g)
-    let acronym = matches.join('')
+    let matches = str.slice(0,1)
+    let acronym = matches
     
 
     // Random Color generator
