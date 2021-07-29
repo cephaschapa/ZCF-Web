@@ -86,8 +86,8 @@ function Chat(props) {
         })
 
 
-    console.log(data.data.chunk)
-    // const messages = data.data.chunk
+    // console.log(data.data.chunk)
+    const messages = data.data.chunk
     
         setMessages(messages)
     }, [messages])
