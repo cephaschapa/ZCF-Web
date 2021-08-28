@@ -401,7 +401,7 @@ function Chat(props) {
                                 <div className="flex w-full space-x-2">
                                 
                                 <div className="flex items-center w-full h-12 pl-2 pr-2 rounded-3xl border-2 text-gray-600 transition transform duration-150 border-gray-200 justify-between">
-                                    <form onSubmit={e=>e.preventDefault()} className="w-full">
+                                    <form onSubmit={sendMessage} className="w-full">
                                         <input onChange={(e)=>{ 
                                             setInput(e.target.value);
                                         }} value={input} className="bg-transparent w-full p-3 active:outline-none focus:outline-none" type="text" placeholder="Aa"/>
