@@ -277,7 +277,7 @@ function Chat(props) {
                             <div className="flex p-3 bg-[#198A00] h-20 rounded-br-2xl rounded-bl-2xl">
                                 <div className="p-1">
                                 {
-                                    avatar_url === null ? <Image height={20} width={20} alt="image" src="/u.svg" className="h-12 w-16 bg-white rounded-full mb-4"/> : <>
+                                    avatar_url === null ? <Image height={64} width={64} alt="image" src="/u.svg" className="bg-white rounded-full mb-4"/> : <>
                                         {props.user_id != props.memberId ? 
                                         <>
                                             <Image src={`https://chat.zcfchat.com/_matrix/media/r0/thumbnail/${props.memberAvatar.avatar_url.slice(6,)}?height=64&width=64`}  alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={60} width={60}/>
@@ -459,7 +459,7 @@ function Chat(props) {
                                <div>
                                                               
                                         {
-                                    avatar_url === null ? <Image height={20} width={20} alt="image" src="/u.svg" className="h-20 w-20 mb-4"/> : <>
+                                    avatar_url === null ? <Image height={64} width={64} alt="image" src="/u.svg" className="h-20 w-20 mb-4"/> : <>
                                     
                                         {props.user_id != props.memberId ? 
                                         <>
