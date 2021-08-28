@@ -4,7 +4,7 @@ export default async function getUserData(){
     // get user information
 
     // get user id
-    const res = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/account/whoami',{
+    const res = await axios.get('https://chat.zcfchat.com/_matrix/client/r0/account/whoami',{
         headers: {
                 'Content-Type': 'application/json',
                  accept: '*/*',

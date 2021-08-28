@@ -25,7 +25,7 @@ function WelcomeSection(props) {
       e.preventDefault()
       setQuery(e.target.value)      
       // search users
-      axios.post('https://chat.dazmessenger.com/_matrix/client/r0/user_directory/search',{
+      axios.post('https://chat.zcfchat.com/_matrix/client/r0/user_directory/search',{
           "limit": 10,
           "search_term": query
       },{
@@ -42,7 +42,8 @@ function WelcomeSection(props) {
       })
     }
     return (
-        <div className="flex flex-col items-center w-full h-screen pt-96">
+        <div className="flex flex-col items-center w-full h-screen pt-96" >
+          
             <h1 className="text-4xl text-gray-500 font-bold mb-10">ZCF Messenger</h1>
             <div className="flex space-x-5">
             {/* Center Icons */}
@@ -110,7 +111,7 @@ function WelcomeSection(props) {
                                               <a href="#" className="flex justify-between w-full" onClick={async (e)=>{
                                                 console.log()
                                                 // Create group
-                                                const res = await axios.post('https://chat.dazmessenger.com/_matrix/client/r0/createRoom',                                 
+                                                const res = await axios.post('https://chat.zcfchat.com/_matrix/client/r0/createRoom',                                 
                                                   {
                                                     "creation_content": {
                                                       "m.federate": true
@@ -134,7 +135,7 @@ function WelcomeSection(props) {
                                                 const userId = resp.user_id
 
                                                 // Invite
-                                                const res2 = await axios.post(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${roomId}/invite`,
+                                                const res2 = await axios.post(`https://chat.zcfchat.com/_matrix/client/r0/rooms/${roomId}/invite`,
                                                   {
                                                       "user_id": userId,
                                                   },                                

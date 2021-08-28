@@ -4,7 +4,9 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Spartan&display=swap');
-
+.bar-of-progress {
+  z-index: 50;
+}
 html, 
 body{
   font-family:'Spartan', sans-serif;;

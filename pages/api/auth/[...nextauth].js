@@ -7,7 +7,7 @@ const providers = [
         name: "Credentials",
         authorize: async (credentials) => {
             try {
-              const url = 'https://chat.dazmessenger.com/_matrix/client/r0/login'
+              const url = 'https://chat.zcfchat.com/_matrix/client/r0/login'
               const user = await axios.post(url,
                 {
                   "identifier": {

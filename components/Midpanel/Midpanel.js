@@ -1,4 +1,4 @@
-import {ChatAlt2Icon, ClipboardCopyIcon, SearchIcon} from '@heroicons/react/outline'
+import {ChatAlt2Icon, ClipboardCopyIcon, SearchIcon, UserAddIcon} from '@heroicons/react/outline'
 import {PlusIcon} from '@heroicons/react/outline'
 import {ChatAltIcon, LockClosedIcon } from '@heroicons/react/solid'
 import {useState, useEffect} from 'react'
@@ -7,38 +7,68 @@ import ChatGroups from '../Chat/ChatGroups'
 import Suggestions from '../Chat/Suggestions'
 import axios from 'axios'
 import {useRouter} from 'next/router'
+import Image from 'next/image'
 import Cookies from 'cookie'
 import Link from 'next/link'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import matrixcs, * as sdk from "matrix-js-sdk"
+import {BulletList} from 'react-content-loader'
+import { 
+  useQuery,
+  useQueryClient,
+  useMutation,
+  QueryClient,
+  QueryClientProvider} from 'react-query'
 
 function Midpanel(props) {   
-    // console.log(props)
+    console.log(props.data.accessToken)
     const {accessToken} = props.data
     const router = useRouter()
     const [openTab, setOpenTab] = useState(1);
     const [openTab2, setOpenTab2] = useState(1);
+    const [openTab3, setOpenTab3] = useState(1);
     const [showModal1, setShowModal1] = useState(false);
     const [query, setQuery] = useState('');
+    const queryClient = new QueryClient()
     const [results, setResults] = useState([])
     const [groups, setGroups] = useState([])
     const [contacts, setContacts] = useState()
+    const [obj, setObj] = useState([])
+    const [rooms, setRooms] = useState([])
+    const [invite,setInvite] = useState('')
 
-
-    // console.log(props.data.rooms)
     const entries = props.data.rooms
-    // console.log(entries.join)
     const object = entries.join
-    const obj = Object.entries(object)
-    // console.log(obj)  
-     
-    useEffect(() => {
-      setContacts(obj)
+    console.log(props)
+    useEffect(async() => {
+      const client = sdk.createClient({
+        baseUrl: "https://chat.zcfchat.com",
+        accessToken: props.token,
+        userId: props.userId,
+      });
+      await client.startClient()
+
+     client.once('sync', async function(state, prevState, res) {
+          if(state === 'PREPARED') {
+            await client.roomInitialSync( props.room, 10000000000000)
+            let allRooms = await client.getRooms()
+            
+            console.log(allRooms)
+            setRooms(allRooms)
+          } else {
+              console.log(state);
+          }
+      });
+
+      
+
       
     }, []);
 
-
     useEffect(() => {
       async function getGroups() {
-        const g = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/publicRooms',{
+        const g = await axios.get('https://chat.zcfchat.com/_matrix/client/r0/publicRooms',{
           headers: {
             'Content-Type': 'application/json',
             accept: '*/*',
@@ -58,7 +88,7 @@ function Midpanel(props) {
       e.preventDefault()
       setQuery(e.target.value)      
       // search users
-      axios.post('https://chat.dazmessenger.com/_matrix/client/r0/user_directory/search',{
+      axios.post('https://chat.zcfchat.com/_matrix/client/r0/user_directory/search',{
           "limit": 10,
           "search_term": query
       },{
@@ -80,9 +110,9 @@ function Midpanel(props) {
         <div className="flex flex-col w-4/12 bg-gray-100 h-screen pr-2 pt-0 p-0 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100">
             {/* Header */}
             <div className="bg-[#198A00] p-4 h-20 rounded-br-2xl rounded-bl-2xl top-0 sticky z-10">
-                <div className="bg-white p-3 px-6 rounded-full">
+                <div className="bg-white p-3 px-6 rounded-2xl">
                     <form className="flex items-center">
-                        <input className="flex-grow focus:outline-none text-gray-700 bg-transparent text-sm" type="search" placeholder="Search Chat"/>
+                        <input className="flex-grow focus:outline-none text-gray-700 bg-transparent text-sm" type="search" placeholder="Search Active Chat"/>
                         <SearchIcon className="text-gray-400 h-6"/>
                     </form>
                 </div>
@@ -90,7 +120,7 @@ function Midpanel(props) {
             </div>
             <div className="flex justify-between mt-4 w-full sticky top-20 bg-gray-100 p-1 z-10">
                 <button
-                    className="flex justify-center rounded-3xl p-3 bg-[#198A00] text-sm shadow-md w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
+                    className="flex justify-center rounded-3xl p-3 bg-[#198A00] text-sm w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
                     data-toggle="tab" href="#link1" role="tablist"
                     onClick={
                         (e)=>{
@@ -100,7 +130,7 @@ function Midpanel(props) {
                         }
                     }><ChatAltIcon className="h-6 mr-1"/> Personal</button>
                 <button
-                    className="flex justify-center rounded-3xl p-3 bg-[#198A00] text-sm shadow-md w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
+                    className="flex justify-center rounded-3xl p-3 bg-[#198A00] text-sm w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
                     data-toggle="tab" href="#link2" role="tablist"
                     onClick={
                         (e)=>{
@@ -109,35 +139,56 @@ function Midpanel(props) {
                             setOpenTab(2)
                         }
                     }><ChatAlt2Icon className="h-6 mr-1"/> Groups</button>
+                <button
+                    className="flex justify-center items-center rounded-3xl p-3 bg-[#198A00] text-sm w-1/2 m-1 transition transform duration-200 hover:bg-[#2b9b12]" 
+                    data-toggle="tab" href="#link2" role="tablist"
+                    onClick={
+                        (e)=>{
+                            e.preventDefault();
+                            // alert('Hello')
+                            setOpenTab(3)
+                        }
+                    }><UserAddIcon className="h-6 mr-1"/> Invites</button>
             </div>
             {/* Chat items */}
-            <div className="mt-4 p-1 tab-content tab-space">
+            <div className="p-1 tab-content tab-space">
                 {/* Personal 1 content */}
                 <div className={`${openTab === 1 ? "block transition ease-in duration-150":"hidden transition duration-150 transform ease-out" }`} id="link1">
-                    <p className="text-gray-500 font-bold mb-3">Active Chats</p>
+                    <p className="text-gray-500 font-bold ">Chats</p>
                     {
-                     !contacts? <p>Loading</p> :   contacts.map(contact =>{
-                          // console.log(contact)
-                          // console.log(contact[1].timeline.events)
-                          const chunk = contact[1].timeline.events
-                          return chunk.map(data=>{
-                            // console.log(data)
-                            if(data.content.membership === "invite"){
-                              // console.log(data)
-                              return (
-                                <PersonalChats id={contact[0]} display_name={data.sender} state_key={data.state_key}/>
-                              )
-                            }
-                          })
-                          // console.log(chunk)
+                     !rooms ? '':  rooms.map( d =>{
+                        // console.log(d)
+                        let n = Object.keys(d.currentState.userIdsToDisplayNames)
+
+                        return n.map(x =>{
+                          if(x != props.userId){
+                            // console.log(x)
+                            // console.log(d.currentState.members[x])
+                            let val = d.currentState.members[x]
+                            return (
+                              <PersonalChats key={val.userId} id={val.userId} contact={val.name} room_id={val.roomId} data = {d} notifictions={d.notificationCounts.total}/>
+                            ) 
+                          }
                         })
-                    }
+                        
+                     })
+                    } 
+
+                  {/* <QueryClientProvider client={queryClient}>
+                    <Messages id={props.room} token={props.token} user={props.userId} read={true}/>
+                </QueryClientProvider> */}
                 </div>  
                 {/* Group List Content */}
                 <div className={`${openTab === 2 ? "block transition ease-in duration-150":"hidden transition duration-150 transform ease-out"}`} id="link2">
                     <p className="text-gray-500 font-bold">Active Groups</p>
-                    <ChatGroups name="AWS Group"/>
-                    <ChatGroups name="News Everyday"/>
+                    {
+                      groups.map(group => <Suggestions key={group.room_id} name={group.name} memcount={group.num_joined_members} topic={group.topic}/>)
+                    }
+                </div>
+                {/* Invites */}
+                <div className={`${openTab === 3 ? "block transition ease-in duration-150":"hidden transition duration-150 transform ease-out"}`} id="link2">
+                    <p className="text-gray-500 font-bold">Room And Group Invites</p>
+                    
                 </div>
             </div>
             {/* Floating Add Button */}
@@ -198,7 +249,7 @@ function Midpanel(props) {
                               <div className="my-4 text-blueGray-500  leading-relaxed">
                                 <form className="">
                                     <div className="flex text-lg">
-                                      <input value={query} type="text" onChange={queryInput} className="flex flex-grow bg-gray-100 p-2 mr-2 rounded-2xl focus:outline-none"/>
+                                      <input value={query} type="text" onChange={queryInput} className="flex flex-grow bg-gray-100 p-2 mr-2 rounded-2xl focus:outline-none text-sm" placeholder="Search by username or email"/>
                                       <button type="submit" className="flex flex-row justify-center rounded-2xl bg-[#198A00] w-10 text-white items-center"><SearchIcon className="h-6"/></button>
                                     </div>
                                 </form>
@@ -209,10 +260,15 @@ function Midpanel(props) {
                                       results.map((resp)=>{
                                           return(
                                             <li key={resp.user_id} className="flex flex-row  items-center mt-4 space-x-2 cursor-pointer transition p-2 pr-4 rounded-2xl duration-150 transform hover:bg-gray-100">
-                                              <a href="#" className="flex justify-between w-full" onClick={async (e)=>{
+                                              <a href="#" className="flex justify-between w-full">
+                                                <div className="flex items-center space-x-3">
+                                                  <div className="h-12 w-12 bg-gray-200 rounded-full"></div>
+                                                  <p>{resp.display_name}</p>
+                                                </div>
+                                                <button className="bg-[#198A00] p-2 w-24 text-white rounded-2xl" onClick={async (e)=>{
                                                 console.log()
                                                 // Create group
-                                                const res = await axios.post('https://chat.dazmessenger.com/_matrix/client/r0/createRoom',                                 
+                                                const res = await axios.post('https://chat.zcfchat.com/_matrix/client/r0/createRoom',                                 
                                                   {
                                                     "creation_content": {
                                                       "m.federate": true
@@ -231,12 +287,12 @@ function Midpanel(props) {
                                                   }
 
                                                 )
-                                                console.log(res.data.room_id)
+                                                
                                                 const roomId = res.data.room_id
                                                 const userId = resp.user_id
 
                                                 // Invite
-                                                const res2 = await axios.post(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${roomId}/invite`,
+                                                const res2 = await axios.post(`https://chat.zcfchat.com/_matrix/client/r0/rooms/${roomId}/invite`,
                                                   {
                                                       "user_id": userId,
                                                   },                                
@@ -257,14 +313,10 @@ function Midpanel(props) {
                                                 // Reroute to page
 
                                                 if(status==200){
-                                                  router.push({pathname: `chat/${roomId}`, query:{u:userId}})
+                                                  toast('Invitative has been sent.')
                                                 }
-                                              }}>
-                                                <div className="flex items-center space-x-3">
-                                                  <div className="h-12 w-12 bg-gray-200 rounded-full"></div>
-                                                  <p>{resp.display_name}</p>
-                                                </div>
-                                                <button className="bg-[#198A00] p-2 w-20 text-white rounded-2xl">Invite</button>
+                                              }}>{invite===''? 'Send Invite': invite}</button>
+                        
                                               </a>
                                             </li>
                                           )
@@ -276,13 +328,13 @@ function Midpanel(props) {
                                 <p className="mt-10 mb-2">Or send an invitation link</p>
                                 <div className="flex border border-[#198A00] w-full p-2 rounded-2xl">
                                     
-                                    <input disabled className="flex flex-grow" value="https://zcf.messenger.com/#/@iamcephas:zcf.messenger.org"/>
+                                    <input disabled className="flex flex-grow" value="https://zcf.com/chat/@iamcephas:zcf.messenger.org"/>
                                     <ClipboardCopyIcon className="h-6 cursor-pointer text-[#198A00]" title="Copy to clipboard" onClick={() => alert('Link copied to clipboard')}/>
                                   
                                 </div>
                               </div>
                             </div>
-                            <div className={`${openTab2 == 2? "block": "hidden"}`}>
+                            <div className={`${openTab2 == 3? "block": "hidden"}`}>
                               <p className="font-bold">Join a group by searching for it. If you cannot find it in results ask for an invite.</p>
                               <div className="my-4 text-blueGray-500  leading-relaxed">
                                 <form className="">
@@ -333,26 +385,3 @@ function Midpanel(props) {
 }
 
 export default Midpanel
-
-export async function getServerSideProps(context){
-
-  const cookies = new Cookies(context.req, context.res)
-  const accessToken = cookies.get('access_token')
-  console.log("Token"+accessToken)
-  // Fetch groups
-  const g = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/publicRooms',{
-    headers: {
-      'Content-Type': 'application/json',
-      accept: '*/*',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`
-    }
-    })
-  console.log(g)
-  return {
-    props:{
-      g
-    }
-  }
-}
-

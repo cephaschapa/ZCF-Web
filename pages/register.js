@@ -65,7 +65,7 @@ export default function Register() {
                   <div className="flex items-center">
                      <span className="mt-4 text-gray-500">Forgot Password?</span>
                   </div>
-                  <button type="submit" className="border-2 mt-2 w-full border-[#198A00] bg-[#198A00] border-2 p-4 rounded-full items-center text-white shadow-md transition duration-150 transform hover:shadow-xl">LOGIN</button>
+                  <button type="submit" className="border-2 mt-2 w-full border-[#198A00] bg-[#198A00] border-2 p-4 rounded-full items-center text-white shadow-md transition duration-150 transform hover:shadow-xl">REGISTER</button>
                   
                 </form>
                 <div className="mt-4 mx-auto center">

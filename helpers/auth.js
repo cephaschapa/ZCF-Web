@@ -4,8 +4,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useRouter} from 'next/router'
 import Cookies from 'universal-cookie'
+import * as sdk from 'matrix-js-sdk'
+
+// const Client = sdk.createClient({
+//   baseUrl: 'https://matrix.org'
+// })
 export async function login(username, password) {
-    const url = 'https://chat.dazmessenger.com/_matrix/client/r0/login'
+    const url = "https://chat.zcfchat.com/_matrix/client/r0/login"
     const user = await axios.post(url,
       {
         "identifier": {
@@ -20,7 +25,7 @@ export async function login(username, password) {
     {
       headers: {
         accept: '*/*',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
       }
     })
     const cookies = new Cookies();
@@ -36,7 +41,7 @@ export async function login(username, password) {
       return true
       
     }else {
-      toast.error("Either username or password is incorrect.")
+      toast.error("Something went wrong. Please try again.")
       return false
     }
       
@@ -45,7 +50,7 @@ export async function login(username, password) {
 
 export async function register(username, password) {
       console.log(username, password)
-      const url = 'https://chat.dazmessenger.com/_matrix/client/r0/register'
+      const url = 'https://chat.zcfchat.com/_matrix/client/r0/register'
       const user = await axios.post(url,
         {
           "auth": {
@@ -77,7 +82,7 @@ export async function register(username, password) {
 
   export async function logout() {
     const accessToken = localStorage.getItem('access_token')
-    const url = 'https://chat.dazmessenger.com/_matrix/client/r0/logout'
+    const url = 'https://chat.zcfchat.com/_matrix/client/r0/logout'
     const user = await axios.post(url,
     {
       headers: {

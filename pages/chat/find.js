@@ -43,7 +43,7 @@ export async function getServerSideProps(context) {
 
     // Sync room state - Cradle of chat
     
-    const syncData = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/sync',{
+    const syncData = await axios.get('https://chat.zcfchat.com/_matrix/client/r0/sync',{
         headers: {
                 'Content-Type': 'application/json',
                  accept: '*/*',
@@ -54,7 +54,7 @@ export async function getServerSideProps(context) {
     // console.log(syncData.account_data)
 
     // get user id
-    const res = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/account/whoami',{
+    const res = await axios.get('https://chat.zcfchat.com/_matrix/client/r0/account/whoami',{
         headers: {
                 'Content-Type': 'application/json',
                  accept: '*/*',
@@ -65,7 +65,7 @@ export async function getServerSideProps(context) {
     const user_id = res.data.user_id
 
     // User Profile Information - Display Name
-    const res1 = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/profile/${user_id}`,{
+    const res1 = await axios.get(`https://chat.zcfchat.com/_matrix/client/r0/profile/${user_id}`,{
         headers: {
                 'Content-Type': 'application/json',
                  accept: '*/*',
@@ -75,7 +75,7 @@ export async function getServerSideProps(context) {
     })  
 
     // User Profile Information - Avatar Url
-    const res2 = await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/profile/${user_id}/avatar_url`,{
+    const res2 = await axios.get(`https://chat.zcfchat.com/_matrix/client/r0/profile/${user_id}/avatar_url`,{
         headers: {
                 'Content-Type': 'application/json',
                  accept: '*/*',
@@ -84,7 +84,7 @@ export async function getServerSideProps(context) {
         }
     })
     
-      const r = axios.get('https://chat.dazmessenger.com/_matrix/client/r0/joined_rooms',{
+      const r = axios.get('https://chat.zcfchat.com/_matrix/client/r0/joined_rooms',{
           headers: {
                   'Content-Type': 'application/json',
                   accept: '*/*',
@@ -97,7 +97,7 @@ export async function getServerSideProps(context) {
 
      
       
-        const g = await axios.get('https://chat.dazmessenger.com/_matrix/client/r0/joined_rooms',{
+        const g = await axios.get('https://chat.zcfchat.com/_matrix/client/r0/joined_rooms',{
           headers: {
             'Content-Type': 'application/json',
             accept: '*/*',
@@ -110,7 +110,7 @@ export async function getServerSideProps(context) {
           // console.log(data)
          const arr = data.map(async (d)=>{
             // console.log(d)
-            await axios.get(`https://chat.dazmessenger.com/_matrix/client/r0/rooms/${d}/joined_members`,{
+            await axios.get(`https://chat.zcfchat.com/_matrix/client/r0/rooms/${d}/joined_members`,{
             headers: {
               'Content-Type': 'application/json',
               accept: '*/*',

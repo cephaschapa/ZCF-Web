@@ -16,7 +16,7 @@ import {useCookies} from 'react-cookie'
 // import {logout} from '../helpers/auth'
 
 function Navbar(props) {
-    console.log(props)
+    // console.log(props)
     const accessToken = props.data.accessToken
     
     const [cookies, setCookie, removeCookie] = useCookies('access_token')
@@ -31,9 +31,9 @@ function Navbar(props) {
     const [dropDown4, setDropDown4] = useState(0)
     const [active, setActive] = useState(false)
 
-    console.log(props.data.presenceList.events[0].content.presence)
+    // console.log(props.data.presenceList.events[0].content.presence)
     // setting user presence state
-    const p = props.data.presenceList.events[0].content.presence
+    const p = "online"
     // setting user presence state
     const presence = () => {
         // on mouse action
@@ -73,19 +73,6 @@ function Navbar(props) {
     // logout handler
     async function logout (e) {
         e.preventDefault();
-        
-        // const at = accessToken
-        // console.log(at)
-        // const res = await axios.post('https://chat.dazmessenger.com/_matrix/client/r0/logout',{
-        //     headers: {
-        //             'Content-Type': 'application/json',
-        //             'accept': '*/*',
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `Bearer ${at}`
-        //     }
-        // })
-        // console.log(at)
-        // console.log(res)
         removeCookie('access_token')
         router.push('/')
     }
@@ -100,7 +87,6 @@ function Navbar(props) {
     let colors = ["#ffffff", "#E91E63", "#673AB7", "#03A9F4", "#FF5722"]
     let setBg = Math.floor(Math.random() * colors.length)
     let ranBg = colors[setBg]
-
     return (
         <div>
             <div className=" w-64 bg-[#198A00] h-screen p-2 text-white mr-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
@@ -108,21 +94,27 @@ function Navbar(props) {
                     <div className="flex border-b border-[#48ac32] pb-5 sticky top-0 bg-[#198A00] z-10">
                         {/* User Profile */}
                         <div className="flex space-x-4 items-center w-4/5">
-                            {/* <Image src= {avatar_url} alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52}  */}
-                                {/* /> */}
-                            <div className="flex flex-row">
+                            {
+                                !avatar_url? <>
+                                    <div className="flex flex-row">
                                 <div className={`flex items-center justify-center text-2xl font-bold pt-1 h-14 w-14 bg-[#fff] rounded-full text-gray-500`}>
-                                    {acronym}
+                                <Image src="/u.svg" alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={92} width={92} />
                                 </div>
                                 {active?<div className="h-4 w-4 bg-[#8bdd78] top-10 -ml-5 rounded-full relative"></div>:<div className="h-4 w-4 bg-gray top-10 -ml-5 rounded-full relative"></div>}
                             </div>
+                                </> : <>
+                                <Image src= {`https://chat.zcfchat.com/_matrix/media/r0/thumbnail/${avatar_url.slice(6,)}?height=64&width=64`} alt="Profile Picture" className="rounded-full cursor-pointer p-2 transition duration-150 transform hover:scale-95" height={52} width={52} />
+                                </>
+                            }
+                            {/* <img src={`https://chat.zcfchat.com/_matrix/media/r0/thumbnail/${avatar_url.slice(6,)}?height=64&width=64`} /> */}
+                            
                             <button 
                                 type="button"
                                 ref={btnDropdownRef}
                                 onClick={() => {
                                     dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover()
-                                }}  className="flex flex-row font-bold p-2 rounded-2xl transition duration-150 transform focus:bg-white focus:text-[#198A00] text-sm"  >{displayname}<span></span>
-                                </button>
+                                }}  className="flex flex-row font-bold p-2 rounded-2xl transition duration-150 transform focus:bg-white focus:text-[#198A00] text-sm w-44"  >{displayname}<span></span>
+                            </button>
                         </div>
                         {/* Dropdown Content */}
                         <div className={`${dropdownPopoverShow ? "transition duration-100 scale-100" : "transition duration-100 scale-0"}  origin-top-left absolute left-0 mt-16 ml-0 w-56 rounded-2xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none p-2 text-gray-400 z-50`}>
@@ -165,7 +157,7 @@ function Navbar(props) {
                     <ul className={`${dropDown0 == 1? "h-52 transition duration-100 ease-in-out" : "hidden"}`}>
                         <li onClick={() => {
                             router.push('/chat')
-                        }}><Navitems  name="Chat" counter="13" icon={<ChatAltIcon className="h-6"/>}/></li>
+                        }}><Navitems  name="Chat" counter={props.chatNum} icon={<ChatAltIcon className="h-6"/>}/></li>
                         <li onClick={()=>{
                             router.push('/chat/find')
                         }}><Navitems name="Invites" counter="4" icon={<UserAddIcon className="h-6"/>}/></li>
