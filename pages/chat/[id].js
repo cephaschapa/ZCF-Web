@@ -261,6 +261,13 @@ function Chat(props) {
                 <link rel="icon" href="/logo.jpeg" />
             </Head>
             <main className="flex h-screen w-full">
+                <ToastContainer 
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
                 {/* Container wrapper */}
                 <div className="flex w-full">
                     {/* Left navigation Panel */}

@@ -107,6 +107,13 @@ function ChatHome(props) {
                         <link rel="icon" href="/logo.jpeg" />
                     </Head>
                     <main className="flex h-screen w-full opacity">
+                        <ToastContainer 
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                        />
                         {/* Container wrapper */}
                         <div className="flex w-full">
                             {/* Left navigation Panel */}
@@ -316,6 +323,7 @@ function ChatHome(props) {
 
                                                                     if(status==200){
                                                                     toast('Invite has been sent.')
+                                                                        router.push('chat/')
                                                                     }
                                                                 }}>{invite===''? 'Send Invite': invite}</button>
                                             

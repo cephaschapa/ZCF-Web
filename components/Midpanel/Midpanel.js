@@ -291,6 +291,8 @@ function Midpanel(props) {
                                                 const roomId = res.data.room_id
                                                 const userId = resp.user_id
 
+                                                router.prefetch(`/chat/${roomId}`)
+
                                                 // Invite
                                                 const res2 = await axios.post(`https://chat.zcfchat.com/_matrix/client/r0/rooms/${roomId}/invite`,
                                                   {
@@ -314,6 +316,8 @@ function Midpanel(props) {
 
                                                 if(status==200){
                                                   toast('Invitative has been sent.')
+                                                  router.push(`${roomId}`)
+                                                  setShowModal1(false)
                                                 }
                                               }}>{invite===''? 'Send Invite': invite}</button>
                         
