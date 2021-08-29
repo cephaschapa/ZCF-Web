@@ -158,7 +158,7 @@ function Navbar(props) {
                         <li onClick={() => {
                             router.push('/chat')
                         }}><Navitems  name="Chat" counter={props.chatNum} icon={<ChatAltIcon className="h-6"/>}/></li>
-                        <li onClick={()=>{
+                        {/* <li onClick={()=>{
                             router.push('/chat/find')
                         }}><Navitems name="Invites" counter="4" icon={<UserAddIcon className="h-6"/>}/></li>
                         <li onClick={()=> {
@@ -166,7 +166,7 @@ function Navbar(props) {
                         }}><Navitems  name="Contacts" counter="29" icon={<UserGroupIcon className="h-6"/>}/></li>
                         <li onClick={()=>{
                             router.push('/chat/find')
-                        }}><Navitems name="Find" icon={<SearchIcon className="h-6"/>}/></li>
+                        }}><Navitems name="Find" icon={<SearchIcon className="h-6"/>}/></li> */}
                     </ul>
                     {/* Channel */}
                     <div onClick={()=> {

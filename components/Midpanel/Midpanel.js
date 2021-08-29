@@ -265,7 +265,7 @@ function Midpanel(props) {
                                                   <div className="h-12 w-12 bg-gray-200 rounded-full"></div>
                                                   <p>{resp.display_name}</p>
                                                 </div>
-                                                <button className="bg-[#198A00] p-2 w-24 text-white rounded-2xl" onClick={async (e)=>{
+                                                <button className="bg-[#198A00] p-2 w-32 text-white rounded-2xl" onClick={async (e)=>{
                                                 console.log()
                                                 // Create group
                                                 const res = await axios.post('https://chat.zcfchat.com/_matrix/client/r0/createRoom',                                 
