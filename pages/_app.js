@@ -4,6 +4,8 @@ import {useCookies} from 'react-cookie'
 import {useEffect} from 'react'
 import Head from 'next/head'
 import ProgressBar from "@badrap/bar-of-progress";
+import {isMobile} from 'react-device-detect'
+import IsMobile from '../components/IsMobile'
 
 
 function MyApp({ Component, pageProps, accessToken, user_id }) {
@@ -46,7 +48,7 @@ function MyApp({ Component, pageProps, accessToken, user_id }) {
           <meta name="theme-color" content="#ffffff" />
       </Head>
       
-      <Component {...pageProps} />
+      {isMobile ? <IsMobile /> : <Component {...pageProps} />}
     </div>)  
 }
 
