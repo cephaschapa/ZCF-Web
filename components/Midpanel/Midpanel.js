@@ -268,14 +268,27 @@ function Midpanel(props) {
                                                 <button className="bg-[#198A00] p-2 w-32 text-white rounded-2xl" onClick={async (e)=>{
                                                 console.log()
                                                 // Create group
+                                                const name = await axios.get(`https://chat.zcfchat.com/_matrix/client/r0/profile/${resp.user_id}/displayname`,                                 
+                                                  {
+                                                    headers: {
+                                                      'Content-Type': 'application/json',
+                                                      accept: '*/*',
+                                                      'Content-Type': 'application/json',
+                                                      'Authorization': `Bearer ${accessToken}`
+                                                    }
+                                                  }
+
+                                                )
+                                                console.log(name.data.displayname)
+                                                let username = name.data.displayname
                                                 const res = await axios.post('https://chat.zcfchat.com/_matrix/client/r0/createRoom',                                 
                                                   {
                                                     "creation_content": {
                                                       "m.federate": true
                                                     },
-                                                    "name": "D",
+                                                    "name": username,
                                                     "preset": "private_chat",
-                                                    "topic": "All about happy hour"
+                                                    "topic": "Private Chat"
                                                   },
                                                   {
                                                     headers: {
