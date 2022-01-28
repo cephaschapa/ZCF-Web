@@ -154,10 +154,10 @@ function Navbar(props) {
                         <h1 className="">Messenger</h1>
                         <ChevronRightIcon className={`${dropDown0 == 1? "rotate-90":"rotate-0"} h-6 w-6 transition duration-150 transform ease-in-out`}/>
                     </div>
-                    <ul className={`${dropDown0 == 1? "h-52 transition duration-100 ease-in-out" : "hidden"}`}>
+                    <ul className={`${dropDown0 == 1? "h-auto transition duration-100 ease-in-out" : "hidden"}`}>
                         <li onClick={() => {
                             router.push('/chat')
-                        }}><Navitems  name="Chat" counter={props.chatNum} icon={<ChatAltIcon className="h-6"/>}/></li>
+                        }}><Navitems  name="Chats" counter={props.chatNum} icon={<ChatAltIcon className="h-6"/>}/></li>
                         {/* <li onClick={()=>{
                             router.push('/chat/find')
                         }}><Navitems name="Invites" counter="4" icon={<UserAddIcon className="h-6"/>}/></li>

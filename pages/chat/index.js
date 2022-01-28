@@ -515,9 +515,9 @@ export async function getServerSideProps(context) {
     const displayname = res1.data.displayname
     const avatar_url = res2.data.avatar_url
     const accountData = syncData.data.account_data
-    const rooms = syncData.data.rooms
-    const groups = syncData.data.groups
-    const invites =syncData.data.rooms.invite
+    const rooms = syncData.data?.rooms || []
+    const groups = syncData.data?.groups || []
+    const invites =syncData.data.rooms?.invite || []
     
     return {
         props: {

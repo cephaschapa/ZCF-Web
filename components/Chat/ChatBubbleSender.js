@@ -16,10 +16,13 @@ function ChatBubbleSender({ key, read, user, data}) {
     let content = data.content
     let sender = data.sender
 
+    console.log(msgtype)
+
     return (
         <div className={`${user == sender? "justify-end":"justify-start"} flex space-x-1 mb-2 w-full`}>
             <div className={`${user == sender? 'bg-[#3db422]': 'text-black bg-gray-200 rounded-br-2xl'} flex p-2 pl-3 rounded-2xl space-y-3 max-w-xl`}>
                 {
+                   
                     msgtype === 'm.text'? <>
                     <div className="flex flex-row">
                         {
@@ -52,6 +55,7 @@ function ChatBubbleSender({ key, read, user, data}) {
                     </div>
                     </>
                 }
+                    
             </div>
         
             {/* <div className="flex items-center w-12 mt-2 justify-center h-12  bg-gray-100 rounded-full cursor-pointer group-hover:flex">

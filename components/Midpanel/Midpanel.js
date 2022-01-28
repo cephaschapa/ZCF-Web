@@ -41,13 +41,21 @@ function Midpanel(props) {
     const entries = props.data.rooms
     const object = entries.join
     console.log(props)
+    const client = sdk.createClient({
+      baseUrl: "https://chat.zcfchat.com",
+      accessToken: props.token,
+      userId: props.userId,
+    });
+    
+    useEffect(() => {
+      async function v(){
+        await client.startClient()
+      }
+      v()
+    })
+
     useEffect(async() => {
-      const client = sdk.createClient({
-        baseUrl: "https://chat.zcfchat.com",
-        accessToken: props.token,
-        userId: props.userId,
-      });
-      await client.startClient()
+      
 
      client.once('sync', async function(state, prevState, res) {
           if(state === 'PREPARED') {
@@ -156,7 +164,7 @@ function Midpanel(props) {
                 <div className={`${openTab === 1 ? "block transition ease-in duration-150":"hidden transition duration-150 transform ease-out" }`} id="link1">
                     <p className="text-gray-500 font-bold ">Chats</p>
                     {
-                     !rooms ? '':  rooms.map( d =>{
+                     !rooms ? <p className="text-black text-6xl">Loading Chats</p>:  rooms.map( d =>{
                         // console.log(d)
                         let n = Object.keys(d.currentState.userIdsToDisplayNames)
 

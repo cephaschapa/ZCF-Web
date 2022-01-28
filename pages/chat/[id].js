@@ -322,7 +322,7 @@ function Chat(props) {
                                             setOpenMenu(false);
                                         }
                                     }}/>
-                                    <InformationCircleIcon className="h-6" title="" onClick={()=>{
+                                    <InformationCircleIcon className="h-6 cursor-pointer" title="" onClick={()=>{
                                         if(openPanel == false) {
                                             setOpenPanel(true);
                                         }
@@ -339,7 +339,6 @@ function Chat(props) {
                                         <li className="transition duration-150 transform hover:bg-gray-200 p-2 rounded-xl cursor-pointer">Info</li>
                                     </ul>
                                 </div>
-                                
                             </div>
                             {/* Chat area */}
                             <div className="p-1 pr-0 h-full overflow-auto">
@@ -803,12 +802,12 @@ export async function getServerSideProps(context) {
     if(!avatarUrl){
         avatarUrl = null
     }
-    const accountData = syncData.data.account_data
-    const deviceList = syncData.data.device_lists
-    const presenceList = syncData.data.presence
-    const rooms = syncData.data.rooms
-    const groups = syncData.data.groups
-    const invites =syncData.data.rooms.invite
+    const accountData = syncData.data?.account_data  || []
+    const deviceList = syncData.data?.device_lists || []
+    const presenceList = syncData?.data?.presence || []
+    const rooms = syncData.data?.rooms || []
+    const groups = syncData.data?.groups || []
+    const invites =syncData.data?.rooms.invite || []
 
     return {
         props: {
